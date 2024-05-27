@@ -9,12 +9,12 @@ public class FlightList {
     private static List<Flight> list;
 
     private FlightList() {
+        list = new ArrayList<>();
     }
 
     public static FlightList getInstance() {
         if(instance == null) {
             instance = new FlightList();
-            list = new ArrayList<>();
         }
         return instance;
     }
@@ -24,11 +24,11 @@ public class FlightList {
         return new ArrayList<>(list);
     }
 
-    public static void add(Flight flight) {
+    public void add(Flight flight) {
         list.add(flight);
     }
 
-    public static void remove(Flight flight) {
+    public void remove(Flight flight) {
         list.remove(flight);
     }
 }

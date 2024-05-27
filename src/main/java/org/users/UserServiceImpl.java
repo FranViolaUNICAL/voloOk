@@ -1,7 +1,6 @@
 package org.users;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.grpc.Status;
 import org.components.ObjectMapperSingleton;
@@ -15,19 +14,18 @@ import java.util.List;
 import java.util.Map;
 
 public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
-
     @Override
     public void registerUser(UserServices.RegisterUserRequest request, StreamObserver<UserServices.RegisterUserResponse> responseObserver) {
         try{
-            ObjectMapper mapper = ObjectMapperSingleton.getInstance();
+            ObjectMapper mapper = ObjectMapperSingleton.getInstance().getObjectMapper();
             boolean userFoundInJson = checkJsonForEmail(request.getEmail());
             boolean success = false;
             // SE L'UTENTE NON RISULTA REGISTRATO PROCEDO A INSERIRLO NEL JSON
             if(!userFoundInJson){
                 User newUser = new User(request.getEmail(), request.getPassword(), request.getLuogoDiNascita(), request.getRegioneDiNascita(), request.getDataDiNascita());
                 UserList userlist = UserList.getInstance();
-                UserList.add(newUser);
-                mapper.writeValue(ObjectMapperSingleton.JSON,userlist);
+                userlist.add(newUser);
+                mapper.writeValue(new File("src/flightDatabase.json"),userlist);
                 success = true;
             }
             //CREO LA RISPOSTA
@@ -72,10 +70,9 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
 
     private boolean checkJsonForEmail(String email) throws IOException {
         //PRENDO MAPPER PER RICERCA SU FILE JSON
-        ObjectMapper mapper = ObjectMapperSingleton.getInstance();
-
+        ObjectMapper mapper = ObjectMapperSingleton.getInstance().getObjectMapper();
         //TRASFORMO QUELLO CHE IL MAPPER LEGGE IN UNA MAPPA
-        Map<String,Object> map = mapper.readValue(ObjectMapperSingleton.JSON,new TypeReference<Map<String,Object>>(){});
+        Map<String,Object> map = mapper.readValue(new File("src/flightDatabase.json"),new TypeReference<Map<String,Object>>(){});
 
         //OTTENGO UNA LISTA DAL VALORE DELLA MAPPA CON KEY USERLIST
         List mainMap2 = (List) map.get("userlist");
@@ -93,10 +90,10 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
 
     private boolean checkCredentials(String email, String password) throws IOException {
         //PRENDO MAPPER PER RICERCA SU FILE JSON
-        ObjectMapper mapper = ObjectMapperSingleton.getInstance();
+        ObjectMapper mapper = ObjectMapperSingleton.getInstance().getObjectMapper();
 
         //TRASFORMO QUELLO CHE IL MAPPER LEGGE IN UNA MAPPA
-        Map<String,Object> map = mapper.readValue(ObjectMapperSingleton.JSON,new TypeReference<Map<String,Object>>(){});
+        Map<String,Object> map = mapper.readValue(new File("src/flightDatabase.json"),new TypeReference<Map<String,Object>>(){});
 
         //OTTENGO UNA LISTA DAL VALORE DELLA MAPPA CON KEY USERLIST
         List mainMap2 = (List) map.get("userlist");

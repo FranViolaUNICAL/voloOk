@@ -7,29 +7,34 @@ import java.util.List;
 
 public class UserList {
     private static UserList instance;
-    private static List<User> list;
+    private List<User> userList;
 
+    // Costruttore privato per impedire l'istanza esterna
     private UserList() {
+        userList = new ArrayList<>();
     }
 
-    public static UserList getInstance() {
-        if(instance == null) {
+    // Metodo synchronized per ottenere l'istanza singleton
+    public static synchronized UserList getInstance() {
+        if (instance == null) {
             instance = new UserList();
-            list = new ArrayList<>();
         }
         return instance;
     }
 
+    // Metodo per ottenere una copia della lista degli utenti
     @JsonProperty
-    public static List<User> getUserlist() {
-        return new ArrayList<>(list);
+    public List<User> getUserList() {
+        return new ArrayList<>(userList);
     }
 
-    public static void add(User user) {
-        list.add(user);
+    // Metodo per aggiungere un utente
+    public void add(User user) {
+        userList.add(user);
     }
 
-    public static void remove(User user) {
-        list.remove(user);
+    // Metodo per rimuovere un utente
+    public void remove(User user) {
+        userList.remove(user);
     }
 }

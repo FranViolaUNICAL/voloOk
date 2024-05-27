@@ -12,7 +12,7 @@ import java.util.Map;
 public class Main {
     public static void main(String[] args) throws IOException {
         try {
-            ObjectMapper mapper = ObjectMapperSingleton.getInstance();
+            ObjectMapper mapper = ObjectMapperSingleton.getInstance().getObjectMapper();
             Map<String,Object> map = mapper.readValue(new File("src/userDatabase.json"),new TypeReference<Map<String,Object>>(){});
             List mainMap2 = (List) map.get("userlist");
             for(int i = 0; i < mainMap2.size(); i++){
