@@ -1,0 +1,88 @@
+syntax = "proto3";
+
+package user;
+
+service UserService {
+  rpc RegisterUser(RegisterUserRequest) returns (RegisterUserResponse);
+  rpc LoginUser(LoginUserRequest) returns (LoginUserResponse);
+  rpc RequestFlightBooking(RequestFlightBookingRequest) returns (RequestFlightBookingResponse);
+  rpc PurchaseTicket(PurchaseTicketRequest) returns (PurchaseTicketResponse);
+  rpc CheckFlightAvailability(CheckFlightAvailabilityRequest) returns (CheckFlightAvailabilityResponse);
+  rpc ChangeFlightDate(ChangeFlightDateRequest) returns (ChangeFlightDateResponse);
+}
+
+message RegisterUserRequest {
+  string email = 1;
+  string password = 2;
+  bool fidelity = 3;
+  string luogoDiNascita = 4;
+  string regioneDiNascita = 5;
+  string dataDiNascita = 6;
+}
+
+message RegisterUserResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message LoginUserRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message LoginUserResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message RequestFlightBookingRequest {
+  string userId = 1;
+  string flightId = 2;
+}
+
+message RequestFlightBookingResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message PurchaseTicketRequest {
+  string userId = 1;
+  string flightId = 2;
+  int32 numberOfTickets = 3;
+}
+
+message PurchaseTicketResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message CheckFlightAvailabilityRequest {
+  string origin = 1;
+  string destination = 2;
+  string date = 3;
+}
+
+message CheckFlightAvailabilityResponse {
+  repeated Flight flights = 1;
+}
+
+message Flight {
+  string flightId = 1;
+  string origin = 2;
+  string destination = 3;
+  string departureTime = 4;
+  string arrivalTime = 5;
+  double price = 6;
+  int32 availableSeats = 7;
+}
+
+message ChangeFlightDateRequest {
+  string userId = 1;
+  string flightId = 2;
+  string newDate = 3;
+}
+
+message ChangeFlightDateResponse {
+  bool success = 1;
+  string message = 2;
+}

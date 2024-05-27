@@ -1,0 +1,19 @@
+{
+  "userlist" : [ {
+    "email" : "franviola98@gmail.com",
+    "password" : "papozzo",
+    "fidelity" : false,
+    "fidelityPoints" : 0,
+    "luogoDiNascita" : null,
+    "regioneDiNascita" : null,
+    "dataDiNascita" : null
+  }, {
+    "email" : "franviola@gmail.com",
+    "password" : "papozzo",
+    "fidelity" : true,
+    "fidelityPoints" : 0,
+    "luogoDiNascita" : null,
+    "regioneDiNascita" : null,
+    "dataDiNascita" : null
+  } ]
+}

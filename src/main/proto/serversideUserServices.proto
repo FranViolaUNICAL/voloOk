@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package server;
+
+service serversideUserServices {
+    rpc DatabaseContainsUserEmail(DatabaseContainsUserEmailRequest) returns (DatabaseContainsUserEmailResponse);
+}
+
+message DatabaseContainsUserEmailRequest {
+    string email = 1;
+}
+
+message DatabaseContainsUserEmailResponse {
+    bool result = 1;
+    string message = 2;
+}
