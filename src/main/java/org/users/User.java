@@ -6,8 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class User {
     private String email;
     private String password;
-    private boolean fidelity;
-    private int fidelityPoints;
+    private int fidelityPoints = 0;
     private String luogoDiNascita;
     private String regioneDiNascita;
     private String dataDiNascita;
@@ -16,14 +15,12 @@ public class User {
         super();
     }
 
-    public User(String email, String password, boolean fidelity) {
+    public User(String email, String password, String luogoDiNascita, String regioneDiNascita, String dataDiNascita) {
         this.email = email;
         this.password = password;
-        this.fidelity = fidelity;
-        if(fidelity){
-            this.fidelityPoints = 0;
-        }
-
+        this.luogoDiNascita = luogoDiNascita;
+        this.regioneDiNascita = regioneDiNascita;
+        this.dataDiNascita = dataDiNascita;
     }
 
     @JsonProperty
@@ -44,16 +41,6 @@ public class User {
     @JsonProperty
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    @JsonProperty
-    public boolean isFidelity() {
-        return fidelity;
-    }
-
-    @JsonProperty
-    public void setFidelity(boolean fidelity) {
-        this.fidelity = fidelity;
     }
 
     @JsonProperty
