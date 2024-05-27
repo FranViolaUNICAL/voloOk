@@ -10,7 +10,6 @@ public class UserList {
     private static List<User> list;
 
     private UserList() {
-
     }
 
     public static UserList getInstance() {
