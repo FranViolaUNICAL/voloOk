@@ -14,6 +14,7 @@ public class FlightList {
     public static FlightList getInstance() {
         if(instance == null) {
             instance = new FlightList();
+            list = new ArrayList<>();
         }
         return instance;
     }

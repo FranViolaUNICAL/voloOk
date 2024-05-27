@@ -15,6 +15,7 @@ public class UserList {
     public static UserList getInstance() {
         if(instance == null) {
             instance = new UserList();
+            list = new ArrayList<>();
         }
         return instance;
     }
