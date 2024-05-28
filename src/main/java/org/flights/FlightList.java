@@ -3,11 +3,13 @@ package org.flights;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import freemarker.template.SimpleDate;
 import org.components.ObjectMapperSingleton;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -53,5 +55,29 @@ public class FlightList {
 
     public void remove(Flight flight) {
         flightList.remove(flight);
+    }
+
+    public List<Flight> checkAvailabilityOriginDestination(String origin, String destination) {
+        List<Flight> l = new ArrayList<>();
+        if(flightList.isEmpty()) {
+            throw new RuntimeException("Initialize flight list singleton first.");
+        }
+        for(Flight flight : flightList) {
+            if(flight.getOrigin().equals(origin) && flight.getDestination().equals(destination)) {
+                l.add(flight);
+            }
+        }
+        return l;
+    }
+
+    public List<Flight> checkAvailabilityFromDate(String origin, String destination, String date) {
+        List<Flight> l = checkAvailabilityOriginDestination(origin, destination);
+        for(Flight flight : l) {
+            Date flightDate = new Date(flight.getDepartureTime());
+            if(flightDate.compareTo(new Date(date)) < 0){
+                l.remove(flight);
+            }
+        }
+        return l;
     }
 }
