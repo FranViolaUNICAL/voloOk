@@ -1,19 +1,24 @@
 {
-  "userlist" : [ {
+  "userList" : [ {
+    "email" : "test@example.com",
+    "password" : "password",
+    "fidelityPoints" : 0,
+    "luogoDiNascita" : "Roma",
+    "regioneDiNascita" : "Lazio",
+    "dataDiNascita" : "01/01/1990"
+  }, {
     "email" : "franviola98@gmail.com",
     "password" : "papozzo",
-    "fidelity" : false,
     "fidelityPoints" : 0,
-    "luogoDiNascita" : null,
-    "regioneDiNascita" : null,
-    "dataDiNascita" : null
+    "luogoDiNascita" : "Palmi",
+    "regioneDiNascita" : "Calabria",
+    "dataDiNascita" : "13/08/2003"
   }, {
-    "email" : "franviola@gmail.com",
-    "password" : "papozzo",
-    "fidelity" : true,
+    "email" : "oggetto@prova.it",
+    "password" : "palmi",
     "fidelityPoints" : 0,
-    "luogoDiNascita" : null,
-    "regioneDiNascita" : null,
-    "dataDiNascita" : null
+    "luogoDiNascita" : "Reggio Calabria",
+    "regioneDiNascita" : "Calabria",
+    "dataDiNascita" : "14/03/1998"
   } ]
 }

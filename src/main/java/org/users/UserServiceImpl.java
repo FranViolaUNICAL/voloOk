@@ -18,18 +18,20 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
     public void registerUser(UserServices.RegisterUserRequest request, StreamObserver<UserServices.RegisterUserResponse> responseObserver) {
         try{
             ObjectMapper mapper = ObjectMapperSingleton.getInstance().getObjectMapper();
-            boolean userFoundInJson = checkJsonForEmail(request.getEmail());
+            boolean userNotFoundInJson = checkJsonForEmail(request.getEmail());
             boolean success = false;
+            String message = "User already registered.";
             // SE L'UTENTE NON RISULTA REGISTRATO PROCEDO A INSERIRLO NEL JSON
-            if(!userFoundInJson){
+            if(userNotFoundInJson){
                 User newUser = new User(request.getEmail(), request.getPassword(), request.getLuogoDiNascita(), request.getRegioneDiNascita(), request.getDataDiNascita());
                 UserList userlist = UserList.getInstance();
                 userlist.add(newUser);
-                mapper.writeValue(new File("src/flightDatabase.json"),userlist);
+                mapper.writerWithDefaultPrettyPrinter().writeValue(new File("src/userDatabase.json"),userlist);
                 success = true;
+                message = String.format("User with email %s successfully registered", request.getEmail());
             }
+
             //CREO LA RISPOSTA
-            String message = success ? "User registered successfully" : "User registration failed";
             UserServices.RegisterUserResponse response = UserServices.RegisterUserResponse.newBuilder()
                     .setSuccess(success)
                     .setMessage(message)
@@ -38,7 +40,8 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
             responseObserver.onNext(response);
             responseObserver.onCompleted();
         }catch (IOException e){
-            responseObserver.onError(Status.INTERNAL.asRuntimeException());
+            e.printStackTrace();
+            responseObserver.onError(Status.INVALID_ARGUMENT.asRuntimeException());
         }
     }
 
@@ -72,10 +75,9 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
         //PRENDO MAPPER PER RICERCA SU FILE JSON
         ObjectMapper mapper = ObjectMapperSingleton.getInstance().getObjectMapper();
         //TRASFORMO QUELLO CHE IL MAPPER LEGGE IN UNA MAPPA
-        Map<String,Object> map = mapper.readValue(new File("src/flightDatabase.json"),new TypeReference<Map<String,Object>>(){});
-
+        Map<String,Object> map = mapper.readValue(new File("src/userDatabase.json"),new TypeReference<Map<String,Object>>(){});
         //OTTENGO UNA LISTA DAL VALORE DELLA MAPPA CON KEY USERLIST
-        List mainMap2 = (List) map.get("userlist");
+        List mainMap2 = (List) map.get("userList");
 
         //GIRO LA LISTA PER CONTROLLARE SE L'UTENTE E' GIA' REGISTRATO
         boolean success = true;
@@ -93,7 +95,7 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
         ObjectMapper mapper = ObjectMapperSingleton.getInstance().getObjectMapper();
 
         //TRASFORMO QUELLO CHE IL MAPPER LEGGE IN UNA MAPPA
-        Map<String,Object> map = mapper.readValue(new File("src/flightDatabase.json"),new TypeReference<Map<String,Object>>(){});
+        Map<String,Object> map = mapper.readValue(new File("src/userDatabase.json"),new TypeReference<Map<String,Object>>(){});
 
         //OTTENGO UNA LISTA DAL VALORE DELLA MAPPA CON KEY USERLIST
         List mainMap2 = (List) map.get("userlist");
