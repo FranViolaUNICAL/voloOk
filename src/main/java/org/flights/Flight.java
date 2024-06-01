@@ -1,7 +1,7 @@
 package org.flights;
 
 public class Flight {
-    private String departureTime, arrivalTime; //FORMATTATO GG/MM/AAAA HH:mm:ss
+    private String departureTime, arrivalTime; //FORMATTATO GG/MMM/AAAA HH:mm:ss
     private String origin, destination;
     private String flightId;
     private int price, availableSeats;

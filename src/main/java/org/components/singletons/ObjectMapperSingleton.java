@@ -1,4 +1,4 @@
-package org.components;
+package org.components.singletons;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 

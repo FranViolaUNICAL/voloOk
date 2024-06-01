@@ -9,20 +9,23 @@ service UserService {
   rpc PurchaseTicket(PurchaseTicketRequest) returns (PurchaseTicketResponse);
   rpc CheckFlightAvailability(CheckFlightAvailabilityRequest) returns (CheckFlightAvailabilityResponse);
   rpc ChangeFlightDate(ChangeFlightDateRequest) returns (ChangeFlightDateResponse);
+
 }
 
 message RegisterUserRequest {
   string email = 1;
   string password = 2;
-  bool fidelity = 3;
   string luogoDiNascita = 4;
   string regioneDiNascita = 5;
   string dataDiNascita = 6;
+  string name = 7;
+  string surname = 8;
 }
 
 message RegisterUserResponse {
   bool success = 1;
   string message = 2;
+  string userId = 3;
 }
 
 message LoginUserRequest {
@@ -46,9 +49,11 @@ message RequestFlightBookingResponse {
 }
 
 message PurchaseTicketRequest {
-  string userId = 1;
-  string flightId = 2;
-  int32 numberOfTickets = 3;
+  string flightId = 1;
+  string userEmail = 2;
+  string name = 3;
+  string surname = 4;
+  string cardNumber = 5;
 }
 
 message PurchaseTicketResponse {

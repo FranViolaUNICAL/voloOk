@@ -4,40 +4,48 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import freemarker.template.SimpleDate;
-import org.components.ObjectMapperSingleton;
+import org.components.observers.AbstractSubject;
+import org.components.singletons.ObjectMapperSingleton;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-public class FlightList {
+public class FlightList extends AbstractSubject {
     private static FlightList instance;
     private static List<Flight> flightList;
 
-    private FlightList() throws IOException {
+    private FlightList(){
+        super();
         flightList = new ArrayList<>();
-        ObjectMapper mapper = ObjectMapperSingleton.getInstance().getObjectMapper();
-        Map<String,Object> map = mapper.readValue(new File("src/flightDatabase.json"),new TypeReference<Map<String,Object>>(){});
-        List mainMap2 = (List) map.get("flightList");
-        for(Object object : mainMap2) {
-            for(int i = 0; i < mainMap2.size(); i++){
-                String departureTime = (String)((Map)mainMap2.get(i)).get("departureTime");
-                String arrivalTime = (String)((Map)mainMap2.get(i)).get("arrivalTime");
-                String origin = (String)((Map)mainMap2.get(i)).get("origin");
-                String destination = (String)((Map)mainMap2.get(i)).get("destination");
-                String flightId = (String)((Map)mainMap2.get(i)).get("flightId");
-                int price = (int)((Map)mainMap2.get(i)).get("price");
-                int availableSeats = (int)((Map)mainMap2.get(i)).get("availableSeats");
-                Flight f = new Flight(departureTime,arrivalTime,origin,destination,flightId,price,availableSeats);
+        try{
+            ObjectMapper mapper = ObjectMapperSingleton.getInstance().getObjectMapper();
+            Map<String,Object> map = mapper.readValue(new File("src/flightDatabase.json"),new TypeReference<Map<String,Object>>(){});
+            List mainMap2 = (List) map.get("flightList");
+            for (Object o : mainMap2) {
+                String departureTime = (String) ((Map) o).get("departureTime");
+                String arrivalTime = (String) ((Map) o).get("arrivalTime");
+                String origin = (String) ((Map) o).get("origin");
+                String destination = (String) ((Map) o).get("destination");
+                String flightId = (String) ((Map) o).get("flightId");
+                int price = (int) ((Map) o).get("price");
+                int availableSeats = (int) ((Map) o).get("availableSeats");
+                Flight f = new Flight(departureTime, arrivalTime, origin, destination, flightId, price, availableSeats);
                 flightList.add(f);
             }
+        }catch (IOException e){
+            e.printStackTrace();
         }
     }
 
-    public static FlightList getInstance() throws IOException {
+    public synchronized static FlightList getInstance() {
         if(instance == null) {
             instance = new FlightList();
         }
@@ -45,16 +53,18 @@ public class FlightList {
     }
 
     @JsonProperty
-    public static List<Flight> getFlightList() {
+    public List<Flight> getFlightList() {
         return new ArrayList<>(flightList);
     }
 
     public void add(Flight flight) {
         flightList.add(flight);
+        notifyObservers();
     }
 
     public void remove(Flight flight) {
         flightList.remove(flight);
+        notifyObservers();
     }
 
     public List<Flight> checkAvailabilityOriginDestination(String origin, String destination) {
@@ -79,5 +89,40 @@ public class FlightList {
             }
         }
         return l;
+    }
+
+    public void modifyFlight(Flight flight, String flightId) {
+        if(!flight.getFlightId().equals(flightId)) {
+            throw new IllegalArgumentException("Flight id does not match.");
+        }
+        flightList.remove(flight);
+        add(flight);
+    }
+
+    public void occupySeat(String flightId){
+        for(Flight flight : flightList) {
+            if(flight.getFlightId().equals(flightId)) {
+                flight.setAvailableSeats(flight.getAvailableSeats() - 1);
+            }
+        }
+        notifyObservers();
+    }
+
+    public boolean hasFlightHappened(String flightId) {
+        boolean hasAlreadyHappened = false;
+        try{
+            for(Flight flight : flightList) {
+                if(flight.getFlightId().equals(flightId)) {
+                    Date departureDate = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss").parse(flight.getDepartureTime());
+                    if(departureDate.before(new Date())){
+                        hasAlreadyHappened = true;
+                    }
+                    break;
+                }
+            }
+        }catch (ParseException e){
+            e.printStackTrace();
+        }
+        return hasAlreadyHappened;
     }
 }

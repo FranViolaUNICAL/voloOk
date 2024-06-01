@@ -1,24 +1,24 @@
 {
   "userList" : [ {
-    "email" : "test@example.com",
+    "email" : "email@prova.it",
     "password" : "password",
     "fidelityPoints" : 0,
-    "luogoDiNascita" : "Roma",
-    "regioneDiNascita" : "Lazio",
-    "dataDiNascita" : "01/01/1990"
+    "luogoDiNascita" : "luogoDiNascita",
+    "regioneDiNascita" : "RegioneDiNascita",
+    "dataDiNascita" : "19/09/1980"
   }, {
-    "email" : "franviola98@gmail.com",
-    "password" : "papozzo",
+    "email" : "chiaradesantis@gmail.com",
+    "password" : "palmi24",
+    "fidelityPoints" : 0,
+    "luogoDiNascita" : "Palmi",
+    "regioneDiNascita" : "Calabria",
+    "dataDiNascita" : "19/08/2003"
+  }, {
+    "email" : "franviola03@gmail.com",
+    "password" : "parademisi56",
     "fidelityPoints" : 0,
     "luogoDiNascita" : "Palmi",
     "regioneDiNascita" : "Calabria",
     "dataDiNascita" : "13/08/2003"
-  }, {
-    "email" : "oggetto@prova.it",
-    "password" : "palmi",
-    "fidelityPoints" : 0,
-    "luogoDiNascita" : "Reggio Calabria",
-    "regioneDiNascita" : "Calabria",
-    "dataDiNascita" : "14/03/1998"
   } ]
 }
