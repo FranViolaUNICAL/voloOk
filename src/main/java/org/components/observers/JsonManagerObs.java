@@ -1,6 +1,7 @@
 package org.components.observers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.components.singletonLists.BookingList;
 import org.components.singletons.ObjectMapperSingleton;
 import org.components.units.Flight;
 import org.components.singletonLists.FlightList;
@@ -17,6 +18,7 @@ public class JsonManagerObs implements Observer{
     public static final File USERJSON = new File("src/userDatabase.json");
     public static final File FLIGHTJSON = new File("src/flightDatabase.json");
     public static final File TICKETJSON = new File("src/ticketDatabase.json");
+    public static final File BOOKINGJSON = new File("src/bookingDatabase.json");
 
     @Override
     public synchronized void update(Subject subject){
@@ -35,6 +37,11 @@ public class JsonManagerObs implements Observer{
                 TicketList ticketList = (TicketList) subject;
                 ObjectMapper mapper = ObjectMapperSingleton.getInstance().getObjectMapper();
                 mapper.writerWithDefaultPrettyPrinter().writeValue(TICKETJSON, ticketList);
+            }
+            else if(subject.getClass() == BookingList.class){
+                BookingList bookingList = (BookingList) subject;
+                ObjectMapper mapper = ObjectMapperSingleton.getInstance().getObjectMapper();
+                mapper.writerWithDefaultPrettyPrinter().writeValue(BOOKINGJSON, bookingList);
             }
         }catch (IOException e){
             e.printStackTrace();

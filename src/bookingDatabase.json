@@ -1,3 +1,10 @@
 {
-  "bookingList": []
+  "bookingList" : [ {
+    "bookingId" : "YRPPP7EM",
+    "flightId" : "SUFLIN1308",
+    "name" : "Chiara",
+    "surname" : "De Santis",
+    "email" : "chiaradesantis@gmail.com",
+    "bookedTicketsNum" : 2
+  } ]
 }

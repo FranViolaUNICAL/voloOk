@@ -1,3 +1,9 @@
 {
-  "ticketList": []
+  "ticketList" : [ {
+    "ticketId" : "NDHDIIQBSO",
+    "flightId" : "SUFLIN1308",
+    "passengerName" : "Francesco",
+    "passengerSurname" : "Viola",
+    "passengerEmail" : "franviola98"
+  } ]
 }

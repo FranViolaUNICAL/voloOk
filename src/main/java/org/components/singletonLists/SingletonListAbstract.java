@@ -21,8 +21,4 @@ public class SingletonListAbstract extends SubjectAbstract {
         list.remove(u);
         notifyObservers();
     }
-
-    public synchronized List<Unit> getAll(){
-        return new ArrayList<>(list);
-    }
 }

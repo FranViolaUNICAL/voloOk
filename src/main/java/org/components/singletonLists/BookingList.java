@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.components.factories.SingletonListsFactory;
 import org.components.units.Unit;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BookingList extends SingletonListAbstract {
@@ -26,6 +27,6 @@ public class BookingList extends SingletonListAbstract {
     }
     @JsonProperty("bookingList")
     public synchronized List<Unit> getBookingList(){
-        return getAll();
+        return new ArrayList<>(list);
     }
 }

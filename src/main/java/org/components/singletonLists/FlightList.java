@@ -31,7 +31,7 @@ public class FlightList extends SingletonListAbstract {
 
     @JsonProperty("flightList")
     public synchronized List<Unit> getFlightList() {
-        return getAll();
+        return new ArrayList<>(list);
     }
 
     public List<Flight> checkAvailabilityOriginDestination(String origin, String destination) {

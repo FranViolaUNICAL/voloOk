@@ -5,16 +5,20 @@ import org.components.utils.RandomStringGenerator;
 import java.util.Objects;
 
 public class Ticket implements Unit{
-    public final int IDLENGTH = 10;
-    private String ticketId;
+    private final String ticketId;
     private String flightId;
     private String passengerName;
+    private String passengerSurname;
     private String passengerEmail;
 
+
+
     public Ticket(String flightId, String passengerName, String passengerSurname, String passengerEmail) {
+        int IDLENGTH = 10;
         this.ticketId = RandomStringGenerator.generateRandomString(IDLENGTH);
         this.flightId = flightId;
         this.passengerName = passengerName;
+        this.passengerSurname = passengerSurname;
         this.passengerEmail = passengerEmail;
     }
 
@@ -22,45 +26,22 @@ public class Ticket implements Unit{
         this.ticketId = ticketId;
         this.flightId = flightId;
         this.passengerName = passengerName;
+        this.passengerSurname = passengerSurname;
         this.passengerEmail = passengerEmail;
     }
-
-    public int getIDLENGTH() {
-        return IDLENGTH;
-    }
-
     public String getTicketId() {
         return ticketId;
     }
-
-    public void setTicketId(String ticketId) {
-        this.ticketId = ticketId;
-    }
-
     public String getFlightId() {
         return flightId;
     }
-
-    public void setFlightId(String flightId) {
-        this.flightId = flightId;
-    }
-
     public String getPassengerName() {
         return passengerName;
     }
-
-    public void setPassengerName(String passengerName) {
-        this.passengerName = passengerName;
-    }
-
+    public String getPassengerSurname(){ return passengerSurname; }
     public String getPassengerEmail() {
         return passengerEmail;
     }
-
-    public void setPassengerEmail(String passengerEmail) {
-        this.passengerEmail = passengerEmail;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -72,4 +53,9 @@ public class Ticket implements Unit{
     public int hashCode() {
         return Objects.hash(ticketId, flightId);
     }
+    @Override
+    public String toString() {
+        return ticketId;
+    }
+
 }

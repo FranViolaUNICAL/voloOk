@@ -38,8 +38,8 @@ public class SingletonListsFactory {
                     String origin = (String) ((Map<?, ?>) o).get("origin");
                     String destination = (String) ((Map<?, ?>) o).get("destination");
                     String flightId = (String) ((Map<?, ?>) o).get("flightId");
-                    String price = (String) ((Map<?, ?>) o).get("price");
-                    String availableSeats = (String) ((Map<?, ?>) o).get("availableSeats");
+                    String price = ((Map<?, ?>) o).get("price").toString();
+                    String availableSeats = ((Map<?, ?>) o).get("availableSeats").toString();
                     int priceInt = price == null ? 0 : Integer.parseInt(price);
                     int availableSeatsInt = availableSeats == null ? 0 : Integer.parseInt(availableSeats);
                     Flight f = new Flight(departureTime, arrivalTime, origin, destination, flightId, priceInt, availableSeatsInt);
@@ -48,12 +48,12 @@ public class SingletonListsFactory {
                 break;
             case "ticketList":
                 for (Object o : mainMap2) {
-                    String ticketId = (String) ((Map<?, ?>) o).get("tickedId");
+                    String ticketId = (String) ((Map<?, ?>) o).get("ticketId");
                     String flightId = (String) ((Map<?, ?>) o).get("flightId");
                     String passengerName = (String) ((Map<?, ?>) o).get("passengerName");
                     String passengerSurname = (String) ((Map<?, ?>) o).get("passengerSurname");
                     String passengerEmail = (String) ((Map<?, ?>) o).get("passengerEmail");
-                    Ticket t = new Ticket(ticketId, flightId, passengerName, passengerEmail);
+                    Ticket t = new Ticket(ticketId, flightId, passengerName, passengerSurname, passengerEmail);
                     ret.add(t);
                 }
                 break;
@@ -64,7 +64,7 @@ public class SingletonListsFactory {
                     String name = (String) ((Map<?, ?>) o).get("name");
                     String surname = (String) ((Map<?, ?>) o).get("surname");
                     String email = (String) ((Map<?, ?>) o).get("email");
-                    String bookedTicketsNum = (String) ((Map<?, ?>) o).get("bookedTicketsNum");
+                    String bookedTicketsNum = ((Map<?, ?>) o).get("bookedTicketsNum").toString();
                     int bookedTicketsNumInt = bookedTicketsNum == null ? 0 : Integer.parseInt(bookedTicketsNum);
                     Booking b = new Booking(bookingId, flightId, name, surname, email, bookedTicketsNumInt);
                     ret.add(b);

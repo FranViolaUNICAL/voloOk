@@ -5,6 +5,7 @@ import org.components.factories.SingletonListsFactory;
 import org.components.units.Unit;
 import org.components.units.User;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserList extends SingletonListAbstract {
@@ -30,7 +31,7 @@ public class UserList extends SingletonListAbstract {
     // Metodo per ottenere una copia della lista degli utenti
     @JsonProperty("userList")
     public List<Unit> getUserList() {
-        return getAll();
+        return new ArrayList<>(list);
     }
 
     public void addFidelityPoints(User u, int points){

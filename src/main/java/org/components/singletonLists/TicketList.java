@@ -5,6 +5,7 @@ import org.components.factories.SingletonListsFactory;
 import org.components.units.Ticket;
 import org.components.units.Unit;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TicketList extends SingletonListAbstract {
@@ -28,7 +29,7 @@ public class TicketList extends SingletonListAbstract {
 
     @JsonProperty("ticketList")
     public List<Unit> getTicketList() {
-        return getAll();
+        return new ArrayList<>(list);
     }
 
     public void add(Ticket ticket) {

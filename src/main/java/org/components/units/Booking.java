@@ -30,6 +30,7 @@ public class Booking implements Unit{
         this.bookedTicketsNum = bookedTicketsNum;
     }
 
+    public String getBookingId(){ return bookingId; }
     public String getFlightId() {
         return flightId;
     }
@@ -61,5 +62,10 @@ public class Booking implements Unit{
     @Override
     public int hashCode() {
         return Objects.hash(flightId, name, surname, email, bookedTicketsNum);
+    }
+
+    @Override
+    public String toString(){
+        return bookingId;
     }
 }
