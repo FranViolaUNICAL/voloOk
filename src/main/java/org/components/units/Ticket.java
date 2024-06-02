@@ -1,10 +1,10 @@
-package org.tickets;
+package org.components.units;
 
 import org.components.utils.RandomStringGenerator;
 
 import java.util.Objects;
 
-public class Ticket {
+public class Ticket implements Unit{
     public final int IDLENGTH = 10;
     private String ticketId;
     private String flightId;

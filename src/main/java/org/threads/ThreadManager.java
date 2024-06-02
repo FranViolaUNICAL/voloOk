@@ -1,9 +1,10 @@
 package org.threads;
 
-import org.flights.Flight;
-import org.flights.FlightList;
-import org.tickets.Ticket;
-import org.tickets.TicketList;
+import org.components.units.Flight;
+import org.components.singletonLists.FlightList;
+import org.components.units.Ticket;
+import org.components.singletonLists.TicketList;
+import org.components.units.Unit;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,13 +15,15 @@ public class ThreadManager{
     public void deleteTickets(){
         try{
             TicketList ticketList = TicketList.getInstance();
-            List<Ticket> tickets = ticketList.getTickets();
+            List<Unit> tickets = ticketList.getTickets();
             FlightList flightList = FlightList.getInstance();
-            List<Flight> flights = flightList.getFlightList();
-            for(Ticket ticket : tickets){
+            List<Unit> flights = flightList.getFlightList();
+            for(Unit uT : tickets){
+                Ticket ticket = (Ticket) uT;
                 String flightId = ticket.getFlightId();
                 boolean found = false;
-                for(Flight flight : flights){
+                for(Unit uF : flights){
+                    Flight flight = (Flight) uF;
                     if(flight.getFlightId().equals(flightId)){
                         found = true;
                         break;
@@ -39,8 +42,9 @@ public class ThreadManager{
     public void deleteFlights(){
         try{
             FlightList flightList = FlightList.getInstance();
-            List<Flight> flights = flightList.getFlightList();
-            for(Flight flight : flights){
+            List<Unit> flights = flightList.getFlightList();
+            for(Unit u : flights){
+                Flight flight = (Flight) u;
                 String flightId = flight.getFlightId();
                 if(flightList.hasFlightHappened(flightId)){
                     flightList.remove(flight);

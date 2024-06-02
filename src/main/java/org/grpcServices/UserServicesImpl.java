@@ -1,24 +1,18 @@
 package org.grpcServices;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.grpc.Status;
 import org.components.factories.UserServicesFactory;
 import org.components.observers.JsonManagerObs;
-import org.components.singletons.ObjectMapperSingleton;
-import org.flights.FlightList;
-import org.tickets.Ticket;
-import org.tickets.TicketList;
-import org.users.User;
-import org.users.UserList;
+import org.components.singletonLists.FlightList;
+import org.components.units.Ticket;
+import org.components.singletonLists.TicketList;
+import org.components.units.User;
+import org.components.singletonLists.UserList;
 import user.UserServiceGrpc;
 import io.grpc.stub.StreamObserver;
 import user.UserServices;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
 
 public class UserServicesImpl extends UserServiceGrpc.UserServiceImplBase {
     @Override

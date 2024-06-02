@@ -1,45 +1,31 @@
-package org.flights;
+package org.components.singletonLists;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import freemarker.template.SimpleDate;
+import org.components.factories.SingletonListsFactory;
 import org.components.observers.AbstractSubject;
 import org.components.singletons.ObjectMapperSingleton;
+import org.components.units.Flight;
+import org.components.units.Unit;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-public class FlightList extends AbstractSubject {
+public class FlightList extends AbstractSubject implements SingletonList {
     private static FlightList instance;
-    private static List<Flight> flightList;
+    private static List<Unit> flightList;
 
     private FlightList(){
         super();
-        flightList = new ArrayList<>();
         try{
-            ObjectMapper mapper = ObjectMapperSingleton.getInstance().getObjectMapper();
-            Map<String,Object> map = mapper.readValue(new File("src/flightDatabase.json"),new TypeReference<Map<String,Object>>(){});
-            List mainMap2 = (List) map.get("flightList");
-            for (Object o : mainMap2) {
-                String departureTime = (String) ((Map) o).get("departureTime");
-                String arrivalTime = (String) ((Map) o).get("arrivalTime");
-                String origin = (String) ((Map) o).get("origin");
-                String destination = (String) ((Map) o).get("destination");
-                String flightId = (String) ((Map) o).get("flightId");
-                int price = (int) ((Map) o).get("price");
-                int availableSeats = (int) ((Map) o).get("availableSeats");
-                Flight f = new Flight(departureTime, arrivalTime, origin, destination, flightId, price, availableSeats);
-                flightList.add(f);
-            }
+            flightList = SingletonListsFactory.createSingletonList("src/flightDatabase.json","flightList");
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -52,8 +38,8 @@ public class FlightList extends AbstractSubject {
         return instance;
     }
 
-    @JsonProperty
-    public List<Flight> getFlightList() {
+    @JsonProperty("flightList")
+    public List<Unit> getFlightList() {
         return new ArrayList<>(flightList);
     }
 
@@ -72,7 +58,8 @@ public class FlightList extends AbstractSubject {
         if(flightList.isEmpty()) {
             throw new RuntimeException("Initialize flight list singleton first.");
         }
-        for(Flight flight : flightList) {
+        for(Unit u : flightList) {
+            Flight flight = (Flight) u;
             if(flight.getOrigin().equals(origin) && flight.getDestination().equals(destination)) {
                 l.add(flight);
             }
@@ -100,7 +87,8 @@ public class FlightList extends AbstractSubject {
     }
 
     public void occupySeat(String flightId){
-        for(Flight flight : flightList) {
+        for(Unit u : flightList) {
+            Flight flight = (Flight) u;
             if(flight.getFlightId().equals(flightId)) {
                 flight.setAvailableSeats(flight.getAvailableSeats() - 1);
             }
@@ -111,7 +99,8 @@ public class FlightList extends AbstractSubject {
     public boolean hasFlightHappened(String flightId) {
         boolean hasAlreadyHappened = false;
         try{
-            for(Flight flight : flightList) {
+            for(Unit u : flightList) {
+                Flight flight = (Flight) u;
                 if(flight.getFlightId().equals(flightId)) {
                     Date departureDate = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss").parse(flight.getDepartureTime());
                     if(departureDate.before(new Date())){

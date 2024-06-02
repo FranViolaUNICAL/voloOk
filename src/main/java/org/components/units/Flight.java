@@ -1,6 +1,6 @@
-package org.flights;
+package org.components.units;
 
-public class Flight {
+public class Flight implements Unit{
     private String departureTime, arrivalTime; //FORMATTATO GG/MMM/AAAA HH:mm:ss
     private String origin, destination;
     private String flightId;

@@ -1,19 +1,17 @@
 package org.components.observers;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.components.singletons.ObjectMapperSingleton;
-import org.flights.Flight;
-import org.flights.FlightList;
-import org.tickets.TicketList;
-import org.users.User;
-import org.users.UserList;
+import org.components.units.Flight;
+import org.components.singletonLists.FlightList;
+import org.components.singletonLists.TicketList;
+import org.components.units.Unit;
+import org.components.units.User;
+import org.components.singletonLists.UserList;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.Semaphore;
 
 public class JsonManagerObs implements Observer{
     public static final File USERJSON = new File("src/userDatabase.json");
@@ -44,9 +42,10 @@ public class JsonManagerObs implements Observer{
     }
 
     public static boolean checkJsonForEmail(String email) throws IOException {
-        List<User> l = UserList.getInstance().getUserList();
-        for(User u : l){
-            if(u.getEmail().equals(email)){
+        List<Unit> l = UserList.getInstance().getUserList();
+        for(Unit u : l){
+            User user = (User) u;
+            if(user.getEmail().equals(email)){
                 return false;
             }
         }
@@ -54,9 +53,10 @@ public class JsonManagerObs implements Observer{
     }
 
     public static boolean checkCredentials(String email, String password) throws IOException {
-        List<User> l = UserList.getInstance().getUserList();
-        for(User u : l){
-            if(u.getEmail().equals(email) && u.getPassword().equals(password)){
+        List<Unit> l = UserList.getInstance().getUserList();
+        for(Unit u : l){
+            User user = (User) u;
+            if(user.getEmail().equals(email) && user.getPassword().equals(password)){
                 return true;
             }
         }
@@ -64,8 +64,9 @@ public class JsonManagerObs implements Observer{
     }
 
     public static boolean checkForTicketPurchase(String flightId) throws IOException{
-        List<Flight> l = FlightList.getInstance().getFlightList();
-        for(Flight f : l){
+        List<Unit> l = FlightList.getInstance().getFlightList();
+        for(Unit uf : l){
+            Flight f = (Flight) uf;
             if(f.getFlightId().equals(flightId) && f.getAvailableSeats() >= 1){
                 return true;
             }
@@ -74,17 +75,19 @@ public class JsonManagerObs implements Observer{
     }
 
     public static boolean checkForFidelity(String userEmail, String flightId) throws IOException{
-        List<User> l = UserList.getInstance().getUserList();
+        List<Unit> l = UserList.getInstance().getUserList();
         int points = 0;
-        for(User u : l){
-            if(u.getEmail().equals(userEmail)){
-                List<Flight> lf = FlightList.getInstance().getFlightList();
-                for(Flight f : lf){
+        for(Unit u : l){
+            User user = (User) u;
+            if(user.getEmail().equals(userEmail)){
+                List<Unit> lf = FlightList.getInstance().getFlightList();
+                for(Unit uf : lf){
+                    Flight f = (Flight) uf;
                     if(f.getFlightId().equals(flightId)){
                         points = f.getPrice()*2;
                     }
                 }
-                UserList.getInstance().addFidelityPoints(u,points);
+                UserList.getInstance().addFidelityPoints(user,points);
                 return true;
             }
         }
