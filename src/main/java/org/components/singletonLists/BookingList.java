@@ -1,32 +1,32 @@
 package org.components.singletonLists;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.components.factories.SingletonListsFactory;
-import org.components.observers.AbstractSubject;
-import org.components.observers.Observer;
-import org.components.singletons.ObjectMapperSingleton;
-import org.components.units.Booking;
-import org.components.units.Ticket;
 import org.components.units.Unit;
-
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-public class BookingList extends AbstractSubject implements SingletonList {
-    List<Observer> observers;
+public class BookingList extends SingletonListAbstract {
     List<Unit> bookingList;
     private static BookingList instance;
 
     private BookingList(){
+        super();
         try{
-        observers = new ArrayList<>();
         bookingList = SingletonListsFactory.createSingletonList("src/bookingDatabase.json","bookingList");
         }catch (IOException e){
             e.printStackTrace();
         }
+    }
+
+    public static BookingList getInstance(){
+        if(instance == null){
+            instance = new BookingList();
+        }
+        return instance;
+    }
+    @JsonProperty("bookingList")
+    public synchronized List<Unit> getBookingList(){
+        return getAll();
     }
 }

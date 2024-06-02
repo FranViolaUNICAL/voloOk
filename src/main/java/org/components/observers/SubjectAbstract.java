@@ -3,10 +3,10 @@ package org.components.observers;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AbstractSubject implements Subject{
+public class SubjectAbstract implements Subject{
     List<Observer> observers;
 
-    public AbstractSubject() {
+    public SubjectAbstract() {
         observers = new ArrayList<>();
     }
 

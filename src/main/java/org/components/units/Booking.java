@@ -5,15 +5,15 @@ import org.components.utils.RandomStringGenerator;
 import java.util.Objects;
 
 public class Booking implements Unit{
-    private String bookingId;
-    private final int IDLENGTH = 8;
-    private String flightId;
-    private String name;
-    private String surname;
-    private String email;
-    private int bookedTicketsNum;
+    private final String bookingId;
+    private final String flightId;
+    private final String name;
+    private final String surname;
+    private final String email;
+    private final int bookedTicketsNum;
 
     public Booking(String flightId, String name, String surname, String email, int bookedTicketsNum){
+        int IDLENGTH = 8;
         this.bookingId = RandomStringGenerator.generateRandomString(IDLENGTH);
         this.flightId = flightId;
         this.name = name;

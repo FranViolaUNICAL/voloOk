@@ -5,7 +5,6 @@ import org.components.utils.RandomStringGenerator;
 import java.util.Objects;
 
 public class User implements Unit{
-    private final int IDLENGTH = 7;
 
     private String name;
     private String surname;
@@ -29,6 +28,7 @@ public class User implements Unit{
         this.luogoDiNascita = luogoDiNascita;
         this.regioneDiNascita = regioneDiNascita;
         this.dataDiNascita = dataDiNascita;
+        int IDLENGTH = 7;
         userId = RandomStringGenerator.generateRandomString(IDLENGTH);
     }
     public String getName() {

@@ -1,25 +1,16 @@
 package org.components.singletonLists;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.components.factories.SingletonListsFactory;
-import org.components.observers.AbstractSubject;
-import org.components.singletons.ObjectMapperSingleton;
 import org.components.units.Ticket;
 import org.components.units.Unit;
-
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-public class TicketList extends AbstractSubject implements SingletonList {
+public class TicketList extends SingletonListAbstract {
 
     private List<Unit> tickets;
     private static TicketList instance;
-
     private TicketList() {
         super();
         try{
@@ -38,8 +29,8 @@ public class TicketList extends AbstractSubject implements SingletonList {
     }
 
     @JsonProperty("ticketList")
-    public List<Unit> getTickets() {
-        return tickets;
+    public List<Unit> getTicketList() {
+        return getAll();
     }
 
     public void add(Ticket ticket) {

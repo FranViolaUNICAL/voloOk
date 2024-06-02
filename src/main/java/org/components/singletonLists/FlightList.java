@@ -1,24 +1,17 @@
 package org.components.singletonLists;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.components.factories.SingletonListsFactory;
-import org.components.observers.AbstractSubject;
-import org.components.singletons.ObjectMapperSingleton;
 import org.components.units.Flight;
 import org.components.units.Unit;
-
-import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
-public class FlightList extends AbstractSubject implements SingletonList {
+public class FlightList extends SingletonListAbstract {
     private static FlightList instance;
     private static List<Unit> flightList;
 
@@ -39,18 +32,8 @@ public class FlightList extends AbstractSubject implements SingletonList {
     }
 
     @JsonProperty("flightList")
-    public List<Unit> getFlightList() {
-        return new ArrayList<>(flightList);
-    }
-
-    public void add(Flight flight) {
-        flightList.add(flight);
-        notifyObservers();
-    }
-
-    public void remove(Flight flight) {
-        flightList.remove(flight);
-        notifyObservers();
+    public synchronized List<Unit> getFlightList() {
+        return getAll();
     }
 
     public List<Flight> checkAvailabilityOriginDestination(String origin, String destination) {
@@ -67,11 +50,11 @@ public class FlightList extends AbstractSubject implements SingletonList {
         return l;
     }
 
-    public List<Flight> checkAvailabilityFromDate(String origin, String destination, String date) {
+    public List<Flight> checkAvailabilityFromDate(String origin, String destination, String date) throws ParseException {
         List<Flight> l = checkAvailabilityOriginDestination(origin, destination);
         for(Flight flight : l) {
-            Date flightDate = new Date(flight.getDepartureTime());
-            if(flightDate.compareTo(new Date(date)) < 0){
+            Date flightDate = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss").parse(flight.getDepartureTime());
+            if(flightDate.before(new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss").parse(date))){
                 l.remove(flight);
             }
         }

@@ -1,21 +1,13 @@
 package org.components.singletonLists;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.components.factories.SingletonListsFactory;
-import org.components.observers.AbstractSubject;
-import org.components.singletons.ObjectMapperSingleton;
 import org.components.units.Unit;
 import org.components.units.User;
-
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-public class UserList extends AbstractSubject implements SingletonList {
+public class UserList extends SingletonListAbstract {
     private static UserList instance;
     private List<Unit> userList;
 
@@ -40,19 +32,7 @@ public class UserList extends AbstractSubject implements SingletonList {
     // Metodo per ottenere una copia della lista degli utenti
     @JsonProperty("userList")
     public List<Unit> getUserList() {
-        return new ArrayList<>(userList);
-    }
-
-    // Metodo per aggiungere un utente
-    public void add(User user) {
-        userList.add(user);
-        notifyObservers();
-    }
-
-    // Metodo per rimuovere un utente
-    public void remove(User user) {
-        userList.remove(user);
-        notifyObservers();
+        return getAll();
     }
 
     public void addFidelityPoints(User u, int points){

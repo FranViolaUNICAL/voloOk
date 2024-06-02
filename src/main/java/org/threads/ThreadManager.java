@@ -15,7 +15,7 @@ public class ThreadManager{
     public void deleteTickets(){
         try{
             TicketList ticketList = TicketList.getInstance();
-            List<Unit> tickets = ticketList.getTickets();
+            List<Unit> tickets = ticketList.getTicketList();
             FlightList flightList = FlightList.getInstance();
             List<Unit> flights = flightList.getFlightList();
             for(Unit uT : tickets){

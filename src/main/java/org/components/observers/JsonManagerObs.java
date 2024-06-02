@@ -74,7 +74,7 @@ public class JsonManagerObs implements Observer{
         return false;
     }
 
-    public static boolean checkForFidelity(String userEmail, String flightId) throws IOException{
+    public static void checkForFidelity(String userEmail, String flightId) throws IOException{
         List<Unit> l = UserList.getInstance().getUserList();
         int points = 0;
         for(Unit u : l){
@@ -88,10 +88,9 @@ public class JsonManagerObs implements Observer{
                     }
                 }
                 UserList.getInstance().addFidelityPoints(user,points);
-                return true;
+                return;
             }
         }
-        return false;
     }
 
 }

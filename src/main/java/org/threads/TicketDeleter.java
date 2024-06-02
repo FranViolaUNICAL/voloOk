@@ -2,7 +2,7 @@ package org.threads;
 
 public class TicketDeleter extends Thread{
 
-    private ThreadManager tm;
+    private final ThreadManager tm;
 
     public TicketDeleter(ThreadManager tm) {
         this.tm = tm;

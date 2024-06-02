@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public class ObjectMapperSingleton {
     private static ObjectMapperSingleton instance;
-    private ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
 
     private ObjectMapperSingleton() {
         objectMapper = new ObjectMapper();

@@ -9,14 +9,12 @@ public class Ticket implements Unit{
     private String ticketId;
     private String flightId;
     private String passengerName;
-    private String passengerSurname;
     private String passengerEmail;
 
     public Ticket(String flightId, String passengerName, String passengerSurname, String passengerEmail) {
         this.ticketId = RandomStringGenerator.generateRandomString(IDLENGTH);
         this.flightId = flightId;
         this.passengerName = passengerName;
-        this.passengerSurname = passengerSurname;
         this.passengerEmail = passengerEmail;
     }
 

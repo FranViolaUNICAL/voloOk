@@ -1,7 +1,7 @@
 package org.threads;
 
 public class FlightDeleter extends Thread{
-    private ThreadManager tm;
+    private final ThreadManager tm;
 
     public FlightDeleter(ThreadManager tm) {
         this.tm = tm;
