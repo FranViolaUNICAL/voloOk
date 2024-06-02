@@ -13,12 +13,10 @@ import java.util.List;
 
 public class FlightList extends SingletonListAbstract {
     private static FlightList instance;
-    private static List<Unit> flightList;
-
     private FlightList(){
         super();
         try{
-            flightList = SingletonListsFactory.createSingletonList("src/flightDatabase.json","flightList");
+            list = SingletonListsFactory.createSingletonList("src/flightDatabase.json","flightList");
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -38,10 +36,10 @@ public class FlightList extends SingletonListAbstract {
 
     public List<Flight> checkAvailabilityOriginDestination(String origin, String destination) {
         List<Flight> l = new ArrayList<>();
-        if(flightList.isEmpty()) {
+        if(list.isEmpty()) {
             throw new RuntimeException("Initialize flight list singleton first.");
         }
-        for(Unit u : flightList) {
+        for(Unit u : list) {
             Flight flight = (Flight) u;
             if(flight.getOrigin().equals(origin) && flight.getDestination().equals(destination)) {
                 l.add(flight);
@@ -65,12 +63,12 @@ public class FlightList extends SingletonListAbstract {
         if(!flight.getFlightId().equals(flightId)) {
             throw new IllegalArgumentException("Flight id does not match.");
         }
-        flightList.remove(flight);
+        list.remove(flight);
         add(flight);
     }
 
     public void occupySeat(String flightId){
-        for(Unit u : flightList) {
+        for(Unit u : list) {
             Flight flight = (Flight) u;
             if(flight.getFlightId().equals(flightId)) {
                 flight.setAvailableSeats(flight.getAvailableSeats() - 1);
@@ -82,7 +80,7 @@ public class FlightList extends SingletonListAbstract {
     public boolean hasFlightHappened(String flightId) {
         boolean hasAlreadyHappened = false;
         try{
-            for(Unit u : flightList) {
+            for(Unit u : list) {
                 Flight flight = (Flight) u;
                 if(flight.getFlightId().equals(flightId)) {
                     Date departureDate = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss").parse(flight.getDepartureTime());

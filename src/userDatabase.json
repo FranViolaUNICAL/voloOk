@@ -1,5 +1,7 @@
 {
   "userList" : [ {
+    "name" : "nome",
+    "surname" : "cognome",
     "email" : "email@prova.it",
     "password" : "password",
     "fidelityPoints" : 0,
@@ -7,6 +9,8 @@
     "regioneDiNascita" : "RegioneDiNascita",
     "dataDiNascita" : "19/09/1980"
   }, {
+    "name" : "Chiara",
+    "surname" : "De Santis",
     "email" : "chiaradesantis@gmail.com",
     "password" : "palmi24",
     "fidelityPoints" : 0,
@@ -14,6 +18,8 @@
     "regioneDiNascita" : "Calabria",
     "dataDiNascita" : "19/08/2003"
   }, {
+    "name" : "Francesco",
+    "surname" : "Viola",
     "email" : "franviola03@gmail.com",
     "password" : "parademisi56",
     "fidelityPoints" : 0,

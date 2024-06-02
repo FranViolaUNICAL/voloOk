@@ -18,7 +18,7 @@ public class SingletonListsFactory {
         List<?> mainMap2 = (List<?>) map.get(JsonPropertyTag);
         List<Unit> ret = new ArrayList<>();
         switch (JsonPropertyTag) {
-            case "userList": {
+            case "userList":
                 for (Object o : mainMap2) {
                     String name = (String) ((Map<?, ?>) o).get("name");
                     String surname = (String) ((Map<?, ?>) o).get("surname");
@@ -30,22 +30,23 @@ public class SingletonListsFactory {
                     User u = new User(name, surname, email, password, luogoDiNascita, regioneDiNascita, dataDiNascita);
                     ret.add(u);
                 }
-
-            }
-            case "flightList": {
+                break;
+            case "flightList":
                 for (Object o : mainMap2) {
                     String departureTime = (String) ((Map<?, ?>) o).get("departureTime");
                     String arrivalTime = (String) ((Map<?, ?>) o).get("arrivalTime");
                     String origin = (String) ((Map<?, ?>) o).get("origin");
                     String destination = (String) ((Map<?, ?>) o).get("destination");
                     String flightId = (String) ((Map<?, ?>) o).get("flightId");
-                    int price = (int) ((Map<?, ?>) o).get("price");
-                    int availableSeats = (int) ((Map<?, ?>) o).get("availableSeats");
-                    Flight f = new Flight(departureTime, arrivalTime, origin, destination, flightId, price, availableSeats);
+                    String price = (String) ((Map<?, ?>) o).get("price");
+                    String availableSeats = (String) ((Map<?, ?>) o).get("availableSeats");
+                    int priceInt = price == null ? 0 : Integer.parseInt(price);
+                    int availableSeatsInt = availableSeats == null ? 0 : Integer.parseInt(availableSeats);
+                    Flight f = new Flight(departureTime, arrivalTime, origin, destination, flightId, priceInt, availableSeatsInt);
                     ret.add(f);
                 }
-            }
-            case "ticketList": {
+                break;
+            case "ticketList":
                 for (Object o : mainMap2) {
                     String ticketId = (String) ((Map<?, ?>) o).get("tickedId");
                     String flightId = (String) ((Map<?, ?>) o).get("flightId");
@@ -55,19 +56,20 @@ public class SingletonListsFactory {
                     Ticket t = new Ticket(ticketId, flightId, passengerName, passengerEmail);
                     ret.add(t);
                 }
-            }
-            case "bookingList": {
+                break;
+            case "bookingList":
                 for (Object o : mainMap2) {
                     String bookingId = (String) ((Map<?, ?>) o).get("bookingId");
                     String flightId = (String) ((Map<?, ?>) o).get("flightId");
                     String name = (String) ((Map<?, ?>) o).get("name");
                     String surname = (String) ((Map<?, ?>) o).get("surname");
                     String email = (String) ((Map<?, ?>) o).get("email");
-                    int bookedTicketsNum = (Integer) ((Map<?, ?>) o).get("bookedTicketsNum");
-                    Booking b = new Booking(bookingId, flightId, name, surname, email, bookedTicketsNum);
+                    String bookedTicketsNum = (String) ((Map<?, ?>) o).get("bookedTicketsNum");
+                    int bookedTicketsNumInt = bookedTicketsNum == null ? 0 : Integer.parseInt(bookedTicketsNum);
+                    Booking b = new Booking(bookingId, flightId, name, surname, email, bookedTicketsNumInt);
                     ret.add(b);
                 }
-            }
+                break;
         }
         return ret;
     }

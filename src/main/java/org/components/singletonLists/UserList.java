@@ -9,13 +9,11 @@ import java.util.List;
 
 public class UserList extends SingletonListAbstract {
     private static UserList instance;
-    private List<Unit> userList;
-
     // Costruttore privato per impedire l'istanza esterna
     private UserList() {
         super();
         try{
-            userList = SingletonListsFactory.createSingletonList("src/userDatabase.json","userList");
+            list = SingletonListsFactory.createSingletonList("src/userDatabase.json","userList");
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -36,7 +34,7 @@ public class UserList extends SingletonListAbstract {
     }
 
     public void addFidelityPoints(User u, int points){
-        userList.remove(u);
+        list.remove(u);
         int p = u.getFidelityPoints();
         u.setFidelityPoints(p+points);
         add(u);

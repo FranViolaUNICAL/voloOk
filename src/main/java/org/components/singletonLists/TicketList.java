@@ -8,13 +8,11 @@ import java.io.IOException;
 import java.util.List;
 
 public class TicketList extends SingletonListAbstract {
-
-    private List<Unit> tickets;
     private static TicketList instance;
     private TicketList() {
         super();
         try{
-            tickets = SingletonListsFactory.createSingletonList("src/ticketDatabase.json","ticketList");
+            list = SingletonListsFactory.createSingletonList("src/ticketDatabase.json","ticketList");
 
         }catch (IOException e){
             e.printStackTrace();
@@ -34,12 +32,12 @@ public class TicketList extends SingletonListAbstract {
     }
 
     public void add(Ticket ticket) {
-        tickets.add(ticket);
+        list.add(ticket);
         notifyObservers();
     }
 
     public void remove(Ticket ticket) {
-        tickets.remove(ticket);
+        list.remove(ticket);
         notifyObservers();
     }
 }

@@ -7,13 +7,12 @@ import java.io.IOException;
 import java.util.List;
 
 public class BookingList extends SingletonListAbstract {
-    List<Unit> bookingList;
     private static BookingList instance;
 
     private BookingList(){
         super();
         try{
-        bookingList = SingletonListsFactory.createSingletonList("src/bookingDatabase.json","bookingList");
+        list = SingletonListsFactory.createSingletonList("src/bookingDatabase.json","bookingList");
         }catch (IOException e){
             e.printStackTrace();
         }
