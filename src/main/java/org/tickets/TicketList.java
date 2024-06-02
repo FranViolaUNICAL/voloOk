@@ -1,5 +1,6 @@
 package org.tickets;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.components.observers.AbstractSubject;
@@ -24,7 +25,7 @@ public class TicketList extends AbstractSubject {
         try{
             ObjectMapper mapper = ObjectMapperSingleton.getInstance().getObjectMapper();
             Map<String,Object> map = mapper.readValue(new File("src/ticketDatabase.json"),new TypeReference<Map<String,Object>>(){});
-            List mainMap2 = (List) map.get("userList");
+            List mainMap2 = (List) map.get("ticketList");
             for(Object o : mainMap2) {
                 String ticketId = (String) ((Map) o).get("tickedId");
                 String flightId = (String) ((Map) o).get("flightId");
@@ -46,6 +47,7 @@ public class TicketList extends AbstractSubject {
         return instance;
     }
 
+    @JsonProperty
     public List<Ticket> getTickets() {
         return tickets;
     }

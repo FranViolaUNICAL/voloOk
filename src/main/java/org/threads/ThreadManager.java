@@ -53,20 +53,11 @@ public class ThreadManager{
     }
 
     public void cleanup(){
-        try{
-            while(true){
-                List<Thread> l = new ArrayList<>();
-                l.add(new FlightDeleter(this));
-                l.add(new TicketDeleter(this));
-                for(Thread t : l){
-                    t.start();
-                }
-                for(Thread t : l){
-                    t.join();
-                }
-            }
-        }catch(InterruptedException e) {
-            e.printStackTrace();
+        List<Thread> l = new ArrayList<>();
+        l.add(new FlightDeleter(this));
+        l.add(new TicketDeleter(this));
+        for(Thread t : l){
+            t.start();
         }
     }
 

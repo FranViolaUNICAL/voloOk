@@ -43,7 +43,7 @@ public class JsonManagerObs implements Observer{
         }
     }
 
-    public synchronized static boolean checkJsonForEmail(String email) throws IOException {
+    public static boolean checkJsonForEmail(String email) throws IOException {
         List<User> l = UserList.getInstance().getUserList();
         for(User u : l){
             if(u.getEmail().equals(email)){
@@ -53,7 +53,7 @@ public class JsonManagerObs implements Observer{
         return true;
     }
 
-    public synchronized static boolean checkCredentials(String email, String password) throws IOException {
+    public static boolean checkCredentials(String email, String password) throws IOException {
         List<User> l = UserList.getInstance().getUserList();
         for(User u : l){
             if(u.getEmail().equals(email) && u.getPassword().equals(password)){
@@ -63,10 +63,28 @@ public class JsonManagerObs implements Observer{
         return false;
     }
 
-    public synchronized static boolean checkForTicketPurchase(String flightId) throws IOException{
+    public static boolean checkForTicketPurchase(String flightId) throws IOException{
         List<Flight> l = FlightList.getInstance().getFlightList();
         for(Flight f : l){
             if(f.getFlightId().equals(flightId) && f.getAvailableSeats() >= 1){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean checkForFidelity(String userEmail, String flightId) throws IOException{
+        List<User> l = UserList.getInstance().getUserList();
+        int points = 0;
+        for(User u : l){
+            if(u.getEmail().equals(userEmail)){
+                List<Flight> lf = FlightList.getInstance().getFlightList();
+                for(Flight f : lf){
+                    if(f.getFlightId().equals(flightId)){
+                        points = f.getPrice()*2;
+                    }
+                }
+                UserList.getInstance().addFidelityPoints(u,points);
                 return true;
             }
         }

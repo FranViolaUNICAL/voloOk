@@ -83,6 +83,7 @@ public class UserServicesImpl extends UserServiceGrpc.UserServiceImplBase {
                 Ticket newTicket = new Ticket(request.getFlightId(), request.getName(), request.getSurname(), request.getUserEmail());
                 ticketList.add(newTicket);
                 FlightList.getInstance().occupySeat(request.getFlightId());
+                JsonManagerObs.checkForFidelity(request.getUserEmail(), request.getFlightId());
             }
             UserServices.PurchaseTicketResponse response = UserServicesFactory.createPurchaseTicketResponse(message,success);
             responseObserver.onNext(response);

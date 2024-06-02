@@ -64,4 +64,11 @@ public class UserList extends AbstractSubject {
         notifyObservers();
     }
 
+    public void addFidelityPoints(User u, int points){
+        userList.remove(u);
+        int p = u.getFidelityPoints();
+        u.setFidelityPoints(p+points);
+        add(u);
+    }
+
 }

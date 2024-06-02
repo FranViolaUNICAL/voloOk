@@ -9,7 +9,6 @@ service UserService {
   rpc PurchaseTicket(PurchaseTicketRequest) returns (PurchaseTicketResponse);
   rpc CheckFlightAvailability(CheckFlightAvailabilityRequest) returns (CheckFlightAvailabilityResponse);
   rpc ChangeFlightDate(ChangeFlightDateRequest) returns (ChangeFlightDateResponse);
-
 }
 
 message RegisterUserRequest {
