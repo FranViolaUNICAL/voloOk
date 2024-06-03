@@ -1,10 +1,6 @@
 package org.components.factories;
 
-import org.components.units.Flight;
 import user.UserServices;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class UserServicesFactory {
     public static UserServices.RegisterUserResponse createRegisterUserResponse(String message, boolean success, String userId) {
