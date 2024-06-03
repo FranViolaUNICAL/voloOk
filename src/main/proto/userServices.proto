@@ -3,10 +3,10 @@ syntax = "proto3";
 package user;
 
 service UserService {
-  rpc RegisterUser(RegisterUserRequest) returns (RegisterUserResponse);
-  rpc LoginUser(LoginUserRequest) returns (LoginUserResponse);
-  rpc RequestFlightBooking(RequestFlightBookingRequest) returns (RequestFlightBookingResponse);
-  rpc PurchaseTicket(PurchaseTicketRequest) returns (PurchaseTicketResponse);
+  rpc RegisterUser(RegisterUserRequest) returns (RegisterUserResponse); //IMPLEMENTATO
+  rpc LoginUser(LoginUserRequest) returns (LoginUserResponse); //IMPLEMENTATO
+  rpc BookFlight(FlightBookRequest) returns (FlightBookResponse); //IMPLEMENTATO
+  rpc PurchaseTicket(PurchaseTicketRequest) returns (PurchaseTicketResponse); //IMPLEMENTATO
   rpc CheckFlightAvailability(CheckFlightAvailabilityRequest) returns (CheckFlightAvailabilityResponse);
   rpc ChangeFlightDate(ChangeFlightDateRequest) returns (ChangeFlightDateResponse);
 }
@@ -37,12 +37,15 @@ message LoginUserResponse {
   string message = 2;
 }
 
-message RequestFlightBookingRequest {
-  string userId = 1;
-  string flightId = 2;
+message FlightBookRequest {
+  string name = 1;
+  string surname = 2;
+  string flightId = 3;
+  string email = 4;
+  int32 bookedTicketsNum = 5;
 }
 
-message RequestFlightBookingResponse {
+message FlightBookResponse {
   bool success = 1;
   string message = 2;
 }
@@ -81,7 +84,7 @@ message Flight {
 }
 
 message ChangeFlightDateRequest {
-  string userId = 1;
+  string bookingId = 1;
   string flightId = 2;
   string newDate = 3;
 }

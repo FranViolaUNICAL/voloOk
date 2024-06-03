@@ -8,38 +8,20 @@ import org.components.units.*;
 import org.components.units.Unit;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class Main {
-    public static void main(String[] args) throws IOException{
-        JsonManagerObs man = new JsonManagerObs();
-
-        //Ticket t = new Ticket("SUFLIN1308","Francesco","Viola","franviola98");
-        //Flight f = new Flight("13/Aug/2024 13:00:00", "13/Aug/2024 18:20:00", "SUF","LIN","SUFLIN1308",150,120);
-        //Booking b = new Booking("SUFLIN1308","Chiara","De Santis","chiaradesantis@gmail.com",2);
-
-        TicketList.getInstance().attach(man);
-        BookingList.getInstance().attach(man);
-        UserList.getInstance().attach(man);
-        FlightList.getInstance().attach(man);
-
-        //TicketList.getInstance().add(t);
-        //BookingList.getInstance().add(b);
-        //FlightList.getInstance().add(f);
-
-        List<Unit> ticketList = TicketList.getInstance().getTicketList();
-        List<Unit> bookingList = BookingList.getInstance().getBookingList();
-        List<Unit> userList = UserList.getInstance().getUserList();
-        List<Unit> flightList = FlightList.getInstance().getFlightList();
-
-        System.out.println(ticketList);
-        System.out.println("---------------------------------------------------------");
-        System.out.println(flightList);
-        System.out.println("---------------------------------------------------------");
-        System.out.println(bookingList);
-        System.out.println("---------------------------------------------------------");
-        System.out.println(userList);
-
-
+    public static void main(String[] args) throws IOException, ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy' 'HH:mm:ss");
+        String date1String = "03/06/2024 10:55:00";
+        Date date1 = sdf.parse(date1String);
+        String date2String = "06/06/2024 10:55:00";
+        Date date2 = sdf.parse(date2String);
+        long diff = (date2.getTime() - date1.getTime());
+        System.out.println(diff);
+        System.out.println(diff / 1000 / 60 / 60 / 24);
     }
 }

@@ -51,8 +51,8 @@ public class FlightList extends SingletonListAbstract {
     public List<Flight> checkAvailabilityFromDate(String origin, String destination, String date) throws ParseException {
         List<Flight> l = checkAvailabilityOriginDestination(origin, destination);
         for(Flight flight : l) {
-            Date flightDate = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss").parse(flight.getDepartureTime());
-            if(flightDate.before(new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss").parse(date))){
+            Date flightDate = new SimpleDateFormat("dd/MM/yyyy' 'HH:mm:ss").parse(flight.getDepartureTime());
+            if(flightDate.before(new SimpleDateFormat("dd/MM/yyyy' 'HH:mm:ss").parse(date))){
                 l.remove(flight);
             }
         }

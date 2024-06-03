@@ -3,6 +3,7 @@ package org.components.observers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.components.singletonLists.BookingList;
 import org.components.singletons.ObjectMapperSingleton;
+import org.components.units.Booking;
 import org.components.units.Flight;
 import org.components.singletonLists.FlightList;
 import org.components.singletonLists.TicketList;
@@ -12,6 +13,9 @@ import org.components.singletonLists.UserList;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class JsonManagerObs implements Observer{
@@ -98,6 +102,37 @@ public class JsonManagerObs implements Observer{
                 return;
             }
         }
+    }
+
+    public static boolean checkForBooking(String flightId, int numSeats, String email) throws IOException, ParseException {
+        List<Unit> lBooking = BookingList.getInstance().getBookingList();
+        for(Unit u : lBooking){
+            Booking b = (Booking) u;
+            if(b.getEmail().equals(email) && b.getFlightId().equals(flightId)){
+                return false;
+            }
+        }
+        List<Unit> l = FlightList.getInstance().getFlightList();
+        for(Unit u : l){
+            Flight f = (Flight) u;
+            if(f.getFlightId().equals(flightId)){
+                if(f.getAvailableSeats() >= numSeats){
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy' 'HH:mm:ss");
+                    Date departureDate = sdf.parse(f.getDepartureTime());
+                    Date currentDate = new Date();
+                    String currentDateString = sdf.format(currentDate);
+                    currentDate = sdf.parse(currentDateString);
+                    long difference = departureDate.getTime() - currentDate.getTime();
+                    long differenceInDays = difference / (24 * 60 * 60 * 1000);
+                    if(differenceInDays < 3){
+                        return false;
+                    }
+                }else{
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
 }

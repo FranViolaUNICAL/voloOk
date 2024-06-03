@@ -2,16 +2,15 @@ package org.threads;
 
 import java.util.concurrent.TimeUnit;
 
-public class TicketDeleter extends Thread{
-
+public class BookingDeleter extends Thread {
     private final ThreadManager tm;
 
-    public TicketDeleter(ThreadManager tm) {
+    public BookingDeleter(ThreadManager tm) {
         this.tm = tm;
     }
 
-    public void run(){
-        tm.deleteTickets();
+    public void run() {
+        tm.deleteBooking();
         try {
             TimeUnit.DAYS.sleep(1);
         } catch (InterruptedException e) {

@@ -3,7 +3,9 @@ package org.grpcServices;
 import io.grpc.Status;
 import org.components.factories.UserServicesFactory;
 import org.components.observers.JsonManagerObs;
+import org.components.singletonLists.BookingList;
 import org.components.singletonLists.FlightList;
+import org.components.units.Booking;
 import org.components.units.Ticket;
 import org.components.singletonLists.TicketList;
 import org.components.units.User;
@@ -13,6 +15,7 @@ import io.grpc.stub.StreamObserver;
 import user.UserServices;
 
 import java.io.IOException;
+import java.text.ParseException;
 
 public class UserServicesImpl extends UserServiceGrpc.UserServiceImplBase {
     @Override
@@ -84,6 +87,26 @@ public class UserServicesImpl extends UserServiceGrpc.UserServiceImplBase {
             responseObserver.onCompleted();
         }catch(IOException e){
             responseObserver.onError(Status.INTERNAL.asRuntimeException());
+        }
+    }
+
+    @Override
+    public void bookFlight(UserServices.FlightBookRequest request, StreamObserver<UserServices.FlightBookResponse> responseObserver){
+        try{
+            boolean success = JsonManagerObs.checkForBooking(request.getFlightId(), request.getBookedTicketsNum(), request.getEmail());
+            String message = success ? "Booking successful" : "Booking failed";
+            if(success){
+                Booking booking = new Booking(request.getFlightId(), request.getName(), request.getSurname(), request.getEmail(), request.getBookedTicketsNum());
+                for(int i = 0; i < booking.getBookedTicketsNum(); i++){
+                    FlightList.getInstance().occupySeat(request.getFlightId());
+                }
+                BookingList.getInstance().add(booking);
+            }
+            UserServices.FlightBookResponse response = UserServicesFactory.createFlightBookResponse(message,success);
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+        }catch (IOException | ParseException e){
+            e.printStackTrace();
         }
     }
 

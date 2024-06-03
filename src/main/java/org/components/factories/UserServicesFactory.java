@@ -22,4 +22,10 @@ public class UserServicesFactory {
                 .setMessage(message)
                 .build();
     }
+    public static UserServices.FlightBookResponse createFlightBookResponse(String message, boolean success) {
+        return UserServices.FlightBookResponse.newBuilder()
+                .setSuccess(success)
+                .setMessage(message)
+                .build();
+    }
 }

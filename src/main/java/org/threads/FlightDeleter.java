@@ -1,5 +1,7 @@
 package org.threads;
 
+import java.util.concurrent.TimeUnit;
+
 public class FlightDeleter extends Thread{
     private final ThreadManager tm;
 
@@ -9,5 +11,10 @@ public class FlightDeleter extends Thread{
 
     public void run() {
         tm.deleteFlights();
+        try {
+            TimeUnit.DAYS.sleep(1);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
