@@ -7,7 +7,7 @@ service UserService {
   rpc LoginUser(LoginUserRequest) returns (LoginUserResponse); //IMPLEMENTATO
   rpc BookFlight(FlightBookRequest) returns (FlightBookResponse); //IMPLEMENTATO
   rpc PurchaseTicket(PurchaseTicketRequest) returns (PurchaseTicketResponse); //IMPLEMENTATO
-  rpc CheckFlightAvailability(CheckFlightAvailabilityRequest) returns (CheckFlightAvailabilityResponse);
+  rpc CheckFlightAvailability(CheckFlightAvailabilityRequest) returns (CheckFlightAvailabilityResponse); //IMPLEMENTATO
   rpc ChangeFlightDate(ChangeFlightDateRequest) returns (ChangeFlightDateResponse);
 }
 
