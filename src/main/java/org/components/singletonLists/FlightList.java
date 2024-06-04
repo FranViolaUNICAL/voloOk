@@ -48,11 +48,11 @@ public class FlightList extends SingletonListAbstract {
         return l;
     }
 
-    public List<Flight> checkAvailabilityFromDate(String origin, String destination, String date) throws ParseException {
+    public List<Flight> checkAvailabilityFromDate(String origin, String destination, String departureDate) throws ParseException {
         List<Flight> l = checkAvailabilityOriginDestination(origin, destination);
         for(Flight flight : l) {
             Date flightDate = new SimpleDateFormat("dd/MM/yyyy' 'HH:mm:ss").parse(flight.getDepartureTime());
-            if(flightDate.before(new SimpleDateFormat("dd/MM/yyyy' 'HH:mm:ss").parse(date))){
+            if(flightDate.before(new SimpleDateFormat("dd/MM/yyyy' 'HH:mm:ss").parse(departureDate))){
                 l.remove(flight);
             }
         }

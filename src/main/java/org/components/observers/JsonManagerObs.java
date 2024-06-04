@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -133,6 +134,38 @@ public class JsonManagerObs implements Observer{
             }
         }
         return true;
+    }
+
+    public static List<Flight> isDateChangePossible(String bookingId, String flightId, String newDateDeparture) throws ParseException {
+        List<Unit> lBooking = BookingList.getInstance().getBookingList();
+        for(Unit uB : lBooking){
+            Booking b = (Booking) uB;
+            if(b.getBookingId().equals(bookingId)){
+                List<Unit> lFlights = FlightList.getInstance().getFlightList();
+                for(Unit uF : lFlights){
+                    Flight f = (Flight) uF;
+                    if(f.getFlightId().equals(flightId)){
+                        return FlightList.getInstance().checkAvailabilityFromDate(f.getOrigin(), f.getDestination(), newDateDeparture);
+                    }
+                    else{
+                        return new ArrayList<Flight>();
+                    }
+                }
+            }
+        }
+        return new ArrayList<Flight>();
+    }
+
+    public static String changeBookingDate(String bookingId, String flightId){
+        List<Unit> lBooking = BookingList.getInstance().getBookingList();
+        for(Unit uB : lBooking){
+            Booking b = (Booking) uB;
+            if(b.getBookingId().equals(bookingId)){
+                Booking newBooking = new Booking(flightId, b.getName(), b.getSurname(), b.getEmail(), b.getBookedTicketsNum());
+                return newBooking.getBookingId();
+            }
+        }
+        return null;
     }
 
 }

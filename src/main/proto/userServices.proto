@@ -9,6 +9,7 @@ service UserService {
   rpc PurchaseTicket(PurchaseTicketRequest) returns (PurchaseTicketResponse); //IMPLEMENTATO
   rpc CheckFlightAvailability(CheckFlightAvailabilityRequest) returns (CheckFlightAvailabilityResponse); //IMPLEMENTATO
   rpc ChangeFlightDate(ChangeFlightDateRequest) returns (ChangeFlightDateResponse);
+  rpc ActuallyChangeFlightDate(ActuallyChangeFlightDateRequest) returns (ActuallyChangeFlightDateResponse);
 }
 
 message RegisterUserRequest {
@@ -85,12 +86,24 @@ message Flight {
 
 message ChangeFlightDateRequest {
   string bookingId = 1;
-  string flightId = 2;
-  string newDate = 3;
+  string newDateDeparture = 2;
 }
 
 message ChangeFlightDateResponse {
+  bool possible = 1;
+  string message = 2;
+  repeated Flight flights = 3;
+}
+
+message ActuallyChangeFlightDateRequest {
+  string bookingId = 1;
+  string newFlightId = 2;
+  int32 cost = 3;
+  string cardNumber = 4;
+}
+
+message ActuallyChangeFlightDateResponse {
   bool success = 1;
   string message = 2;
-  int32 cost = 3;
+  string newBookingId = 3;
 }
