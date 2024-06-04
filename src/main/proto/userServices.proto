@@ -81,7 +81,7 @@ message Flight {
 }
 
 message ChangeFlightDateRequest {
-  string userId = 1;
+  string bookingId = 1;
   string flightId = 2;
   string newDate = 3;
 }
@@ -89,4 +89,5 @@ message ChangeFlightDateRequest {
 message ChangeFlightDateResponse {
   bool success = 1;
   string message = 2;
+  int32 cost = 3;
 }
