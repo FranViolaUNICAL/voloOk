@@ -6,6 +6,7 @@ import org.components.observers.JsonManagerObs;
 import org.components.singletonLists.BookingList;
 import org.components.singletonLists.FlightList;
 import org.components.units.Booking;
+import org.components.units.Flight;
 import org.components.units.Ticket;
 import org.components.singletonLists.TicketList;
 import org.components.units.User;
@@ -16,6 +17,7 @@ import user.UserServices;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.List;
 
 public class UserServicesImpl extends UserServiceGrpc.UserServiceImplBase {
     @Override
@@ -107,6 +109,18 @@ public class UserServicesImpl extends UserServiceGrpc.UserServiceImplBase {
             responseObserver.onCompleted();
         }catch (IOException | ParseException e){
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void checkFlightAvailability(UserServices.CheckFlightAvailabilityRequest request, StreamObserver<UserServices.CheckFlightAvailabilityResponse> responseObserver) {
+        try{
+            List<Flight> l = FlightList.getInstance().checkAvailabilityFromDate(request.getOrigin(), request.getDestination(), request.getDate());
+            UserServices.CheckFlightAvailabilityResponse response =  UserServicesFactory.createFlightAvailabilityResponse(l);
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+        }catch (ParseException e){
+            responseObserver.onError(Status.INTERNAL.asRuntimeException());
         }
     }
 
