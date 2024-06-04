@@ -5,6 +5,7 @@ import org.components.factories.UserServicesFactory;
 import org.components.observers.JsonManagerObs;
 import org.components.singletonLists.BookingList;
 import org.components.singletonLists.FlightList;
+import org.components.units.Flight;
 import org.components.units.Booking;
 import org.components.units.Flight;
 import org.components.units.Ticket;
@@ -88,6 +89,18 @@ public class UserServicesImpl extends UserServiceGrpc.UserServiceImplBase {
             responseObserver.onNext(response);
             responseObserver.onCompleted();
         }catch(IOException e){
+            responseObserver.onError(Status.INTERNAL.asRuntimeException());
+        }
+    }
+
+    @Override
+    public void checkFlightAvailability(UserServices.CheckFlightAvailabilityRequest request, StreamObserver<UserServices.CheckFlightAvailabilityResponse> responseObserver) {
+        try{
+            List<Flight> l = FlightList.getInstance().checkAvailabilityFromDate(request.getOrigin(), request.getDestination(), request.getDate());
+            UserServices.CheckFlightAvailabilityResponse response =  UserServicesFactory.createFlightAvailabilityResponse(l);
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+        }catch (ParseException e){
             responseObserver.onError(Status.INTERNAL.asRuntimeException());
         }
     }

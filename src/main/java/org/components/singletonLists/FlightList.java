@@ -59,7 +59,7 @@ public class FlightList extends SingletonListAbstract {
         return l;
     }
 
-    public void modifyFlight(Flight flight, String flightId) {
+    public synchronized void modifyFlight(Flight flight, String flightId) {
         if(!flight.getFlightId().equals(flightId)) {
             throw new IllegalArgumentException("Flight id does not match.");
         }
@@ -67,7 +67,7 @@ public class FlightList extends SingletonListAbstract {
         add(flight);
     }
 
-    public void occupySeat(String flightId){
+    public synchronized void occupySeat(String flightId){
         for(Unit u : list) {
             Flight flight = (Flight) u;
             if(flight.getFlightId().equals(flightId)) {

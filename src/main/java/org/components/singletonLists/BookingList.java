@@ -29,4 +29,6 @@ public class BookingList extends SingletonListAbstract {
     public synchronized List<Unit> getBookingList(){
         return new ArrayList<>(list);
     }
+
+
 }

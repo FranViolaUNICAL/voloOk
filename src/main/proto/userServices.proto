@@ -92,4 +92,5 @@ message ChangeFlightDateRequest {
 message ChangeFlightDateResponse {
   bool success = 1;
   string message = 2;
+  int32 cost = 3;
 }

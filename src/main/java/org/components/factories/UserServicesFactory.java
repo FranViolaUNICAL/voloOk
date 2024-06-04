@@ -26,6 +26,28 @@ public class UserServicesFactory {
                 .setMessage(message)
                 .build();
     }
+
+    public static UserServices.CheckFlightAvailabilityResponse createFlightAvailabilityResponse(List<Flight> list){
+        List<UserServices.Flight> listResponse = new ArrayList<>();
+        for(Flight f : list){
+            listResponse.add(createFlight(f));
+        }
+        return UserServices.CheckFlightAvailabilityResponse.newBuilder()
+                .addAllFlights(listResponse)
+                .build();
+    }
+
+    public static UserServices.Flight createFlight(Flight f){
+        return UserServices.Flight.newBuilder()
+                .setFlightId(f.getFlightId())
+                .setOrigin(f.getOrigin())
+                .setDestination(f.getDestination())
+                .setArrivalTime(f.getArrivalTime())
+                .setDepartureTime(f.getDepartureTime())
+                .setAvailableSeats(f.getAvailableSeats())
+                .setPrice(f.getPrice())
+                .build();
+    }
     public static UserServices.FlightBookResponse createFlightBookResponse(String message, boolean success) {
         return UserServices.FlightBookResponse.newBuilder()
                 .setSuccess(success)

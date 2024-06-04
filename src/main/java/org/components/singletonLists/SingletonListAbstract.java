@@ -12,12 +12,12 @@ public class SingletonListAbstract extends SubjectAbstract {
     public SingletonListAbstract(){
         super();
     }
-    public void add(Unit u){
+    public synchronized void add(Unit u){
         list.add(u);
         notifyObservers();
     }
 
-    public void remove(Unit u){
+    public synchronized void remove(Unit u){
         list.remove(u);
         notifyObservers();
     }
