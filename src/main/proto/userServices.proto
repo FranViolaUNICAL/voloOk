@@ -8,8 +8,8 @@ service UserService {
   rpc BookFlight(FlightBookRequest) returns (FlightBookResponse); //IMPLEMENTATO
   rpc PurchaseTicket(PurchaseTicketRequest) returns (PurchaseTicketResponse); //IMPLEMENTATO
   rpc CheckFlightAvailability(CheckFlightAvailabilityRequest) returns (CheckFlightAvailabilityResponse); //IMPLEMENTATO
-  rpc ChangeFlightDate(ChangeFlightDateRequest) returns (ChangeFlightDateResponse);
-  rpc ActuallyChangeFlightDate(ActuallyChangeFlightDateRequest) returns (ActuallyChangeFlightDateResponse);
+  rpc ChangeFlightDate(ChangeFlightDateRequest) returns (ChangeFlightDateResponse); //IMPLEMENTATO
+  rpc ActuallyChangeFlightDate(ActuallyChangeFlightDateRequest) returns (ActuallyChangeFlightDateResponse); //IMPLEMENTATO
 }
 
 message RegisterUserRequest {
