@@ -91,7 +91,7 @@ public class ThreadManager{
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy' 'HH:mm:ss");
             Date lastPurchaseDate = sdf.parse(lastPurchase);
             Date currentDate = new Date();
-            if(((currentDate.getTime() - lastPurchaseDate.getTime()) / (1000L *60*60*24*365) >= 2){
+            if(((currentDate.getTime() - lastPurchaseDate.getTime()) / (1000L *60*60*24*365) >= 2)){
                 UserList.getInstance().addFidelityPoints(u,-(u.getFidelityPoints()));
             }
         }
