@@ -59,13 +59,7 @@ public class ThreadManager{
                 for(Unit u : l) {
                     Flight f = (Flight) u;
                     if (f.getFlightId().equals(flightId)) {
-                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy' 'HH:mm:ss");
-                        Date departureDate = sdf.parse(f.getDepartureTime());
-                        Date currentDate = new Date();
-                        String currentDateString = sdf.format(currentDate);
-                        currentDate = sdf.parse(currentDateString);
-                        long difference = departureDate.getTime() - currentDate.getTime();
-                        long differenceInDays = difference / (24 * 60 * 60 * 1000);
+                        long differenceInDays = getDifferenceInDays(f);
                         if (differenceInDays < 3) {
                             BookingList.getInstance().remove(uB);
                         }
@@ -75,6 +69,17 @@ public class ThreadManager{
         }catch(ParseException e){
             e.printStackTrace();
         }
+    }
+
+    private static long getDifferenceInDays(Flight f) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy' 'HH:mm:ss");
+        Date departureDate = sdf.parse(f.getDepartureTime());
+        Date currentDate = new Date();
+        String currentDateString = sdf.format(currentDate);
+        currentDate = sdf.parse(currentDateString);
+        long difference = departureDate.getTime() - currentDate.getTime();
+        long differenceInDays = difference / (24 * 60 * 60 * 1000);
+        return differenceInDays;
     }
 
     public void deductFidelityPoints(){
