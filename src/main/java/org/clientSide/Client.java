@@ -31,6 +31,7 @@ public class Client {
         if(u != null){
             this.email = email;
         }
+        return u;
     }
 
     public boolean register(String email, String name, String surname, String luogoDiNascita, String RegioneDiNascita, String dataDiNascita, String password) {
