@@ -31,11 +31,13 @@ public class GrpcServer {
         TicketList ticketList = TicketList.getInstance();
         FlightList flightList = FlightList.getInstance();
         PromoList promoList = PromoList.getInstance();
+        AdministratorList administratorList = AdministratorList.getInstance();
         bookingList.attach(jsonObserver);
         userList.attach(jsonObserver);
         ticketList.attach(jsonObserver);
         flightList.attach(jsonObserver);
         promoList.attach(jsonObserver);
+        administratorList.attach(jsonObserver);
         time.schedule(sc,0,86400000 );
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {

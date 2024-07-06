@@ -29,4 +29,13 @@ public class PromoList extends SingletonListAbstract{
 
     public synchronized List<Unit> getPromoList(){ return new ArrayList<>(list);
     }
+
+    public void remove(String promoCode){
+        for(Unit uP : getPromoList()){
+            Promo p = (Promo) uP;
+            if(p.getCode().equals(promoCode)){
+                remove(uP);
+            }
+        }
+    }
 }

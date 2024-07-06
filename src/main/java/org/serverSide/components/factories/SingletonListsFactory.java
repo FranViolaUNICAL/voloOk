@@ -85,6 +85,14 @@ public class SingletonListsFactory {
                     Promo p = new Promo(description, code, endDate, origin, destination, fidelityOnly, discountFactor);
                     ret.add(p);
                 }
+                break;
+            case "administratorsList":
+                for(Object o : mainMap2){
+                    String email = (String) ((Map<?,?>) o).get("email");
+                    String password = (String) ((Map<?,?>) o).get("password");
+                    Administrator a = new Administrator(email,password);
+                    ret.add(a);
+                }
         }
         return ret;
     }

@@ -35,6 +35,19 @@ public class FlightList extends SingletonListAbstract {
         return new ArrayList<>(list);
     }
 
+    private synchronized void removeFlightFromFlightID(String flightID){
+        for(Unit uf : list){
+            Flight f = (Flight) uf;
+            if(f.getFlightId().equals(flightID)){
+                remove(uf);
+            }
+        }
+    }
+
+    public void remove(String flightID){
+        removeFlightFromFlightID(flightID);
+    }
+
     public List<Flight> checkAvailabilityOriginDestination(String origin, String destination) {
         List<Flight> l = new ArrayList<>();
         if(list.isEmpty()) {

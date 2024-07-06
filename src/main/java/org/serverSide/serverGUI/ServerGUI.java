@@ -1,4 +1,6 @@
 package org.serverSide.serverGUI;
+import org.serverSide.components.observers.Observer;
+import org.serverSide.components.observers.Subject;
 import org.serverSide.components.singletonLists.BookingList;
 import org.serverSide.components.singletonLists.FlightList;
 import org.serverSide.components.singletonLists.PromoList;
@@ -7,10 +9,9 @@ import org.serverSide.components.threads.CleanupManager;
 import org.serverSide.components.units.*;
 
 import javax.swing.*;
-import java.awt.print.Book;
 import java.util.List;
 
-public class ServerGUI extends JFrame{
+public class ServerGUI extends JFrame implements Observer {
     private JPanel contentPane;
     private JButton promoCleanupButton;
     private JButton flightCleanupButton;
@@ -38,6 +39,8 @@ public class ServerGUI extends JFrame{
     private JButton searchPromoButton;
     private JButton searchTicketButton;
     private JButton searchBookingButton;
+    private JButton removeFlightButton;
+    private JButton removePromotionButton;
 
     public ServerGUI(){
         setTitle("VoloOk Server Interface");
@@ -53,6 +56,11 @@ public class ServerGUI extends JFrame{
         searchBookingButton.addActionListener(e -> searchBooking());
         searchPromoButton.addActionListener(e -> searchPromo());
         searchFlightButton.addActionListener(e -> searchFlight());
+        addFlightButton.addActionListener(e -> {addFlight(); populateFlights();});
+        removeFlightButton.addActionListener(e -> {removeFlight(); populateFlights();});
+        addPromotionButton.addActionListener(e -> {addPromo(); populatePromos();});
+
+
 
         populateBookings();
         populateFlights();
@@ -60,6 +68,10 @@ public class ServerGUI extends JFrame{
         populateTickets();
 
         setVisible(true);
+    }
+
+    private void addPromo() {
+        new AddPromoPage();
     }
 
     private void populateFlights(){
@@ -140,7 +152,7 @@ public class ServerGUI extends JFrame{
             }
         }
         if(!flag){
-            flightTextArea.setText("Could not find ticket.");
+            flightTextArea.setText("Could not find flight.");
         }
     }
     private void searchBooking(){
@@ -155,7 +167,25 @@ public class ServerGUI extends JFrame{
             }
         }
         if(!flag){
-            bookingTextArea.setText("Could not find ticket.");
+            bookingTextArea.setText("Could not find booking.");
+        }
+    }
+
+    private void addFlight(){
+        new AddFlightPage();
+    }
+
+    private void removeFlight(){
+        new removeFlightPage();
+    }
+
+    @Override
+    public void update(Subject subject) {
+        if(subject.getClass() == TicketList.class){
+            populateTickets();
+        }
+        if(subject.getClass() == BookingList.class){
+            populateBookings();
         }
     }
 }

@@ -1,3 +1,11 @@
 {
-  "promoList" : [ ]
+  "promoList" : [ {
+    "description" : "Ciao! Questa é una promo di prova",
+    "code" : "PROVA",
+    "endDate" : "06/07/2023 13:11:00",
+    "origin" : "LIN",
+    "destination" : "SUF",
+    "fidelityOnly" : true,
+    "discountFactor" : 0.8
+  } ]
 }
