@@ -84,7 +84,7 @@ public class FlightList extends SingletonListAbstract {
             for(Unit u : list) {
                 Flight flight = (Flight) u;
                 if(flight.getFlightId().equals(flightId)) {
-                    Date departureDate = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss").parse(flight.getDepartureTime());
+                    Date departureDate = new SimpleDateFormat("dd/MM/yyyy' 'HH:mm:ss").parse(flight.getDepartureTime());
                     if(departureDate.before(new Date())){
                         hasAlreadyHappened = true;
                     }

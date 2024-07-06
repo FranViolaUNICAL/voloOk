@@ -1,16 +1,11 @@
 package org.serverSide.components.observers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.serverSide.components.singletonLists.BookingList;
+import org.serverSide.components.singletonLists.*;
 import org.serverSide.components.singletons.ObjectMapperSingleton;
-import org.serverSide.components.units.Booking;
-import org.serverSide.components.units.Flight;
-import org.serverSide.components.singletonLists.FlightList;
-import org.serverSide.components.singletonLists.TicketList;
-import org.serverSide.components.units.Unit;
-import org.serverSide.components.units.User;
-import org.serverSide.components.singletonLists.UserList;
+import org.serverSide.components.units.*;
 
+import java.awt.print.Book;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
@@ -24,6 +19,7 @@ public class JsonManagerObs implements Observer{
     public static final File FLIGHTJSON = new File("src/flightDatabase.json");
     public static final File TICKETJSON = new File("src/ticketDatabase.json");
     public static final File BOOKINGJSON = new File("src/bookingDatabase.json");
+    public static final File PROMOJSON = new File("src/promoDatabase.json");
 
     @Override
     public synchronized void update(Subject subject){
@@ -48,6 +44,11 @@ public class JsonManagerObs implements Observer{
                 ObjectMapper mapper = ObjectMapperSingleton.getInstance().getObjectMapper();
                 mapper.writerWithDefaultPrettyPrinter().writeValue(BOOKINGJSON, bookingList);
             }
+            else if(subject.getClass() == PromoList.class){
+                PromoList promolist = (PromoList) subject;
+                ObjectMapper mapper = ObjectMapperSingleton.getInstance().getObjectMapper();
+                mapper.writerWithDefaultPrettyPrinter().writeValue(PROMOJSON, promolist);
+            }
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -64,22 +65,29 @@ public class JsonManagerObs implements Observer{
         return true;
     }
 
-    public static boolean checkCredentials(String email, String password) throws IOException {
+    public static User checkCredentials(String email, String password) throws IOException {
         List<Unit> l = UserList.getInstance().getUserList();
         for(Unit u : l){
             User user = (User) u;
             if(user.getEmail().equals(email) && user.getPassword().equals(password)){
-                return true;
+                return user;
             }
         }
-        return false;
+        return null;
     }
 
-    public static boolean checkForTicketPurchase(String flightId) throws IOException{
+    public static boolean checkForTicketPurchase(String flightId, String cardNumber, String email) throws IOException{
         List<Unit> l = FlightList.getInstance().getFlightList();
+        List<Unit> lB = BookingList.getInstance().getBookingList();
         for(Unit uf : l){
             Flight f = (Flight) uf;
-            if(f.getFlightId().equals(flightId) && f.getAvailableSeats() >= 1){
+            if(f.getFlightId().equals(flightId) && f.getAvailableSeats() >= 1 && checkLuhn(cardNumber)){
+                for(Unit uB : lB){
+                    Booking b = (Booking) uB;
+                    if(b.getEmail().equals(email) && b.getFlightId().equals(flightId)){
+                        BookingList.getInstance().remove(uB);
+                    }
+                }
                 return true;
             }
         }
@@ -170,4 +178,32 @@ public class JsonManagerObs implements Observer{
         return null;
     }
 
+    public static boolean removeFlightBooking(String flightId, String email){
+        List<Unit> lBooking = BookingList.getInstance().getBookingList();
+        for(Unit uB : lBooking){
+            Booking b = (Booking) uB;
+            if(b.getFlightId().equals(flightId) && b.getEmail().equals(email)){
+                BookingList.getInstance().remove(uB);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean checkLuhn(String cardNo)
+    {
+        int nDigits = cardNo.length();
+        int nSum = 0;
+        boolean isSecond = false;
+        for (int i = nDigits - 1; i >= 0; i--)
+        {
+            int d = cardNo.charAt(i) - '0';
+            if (isSecond == true)
+                d = d * 2;
+            nSum += d / 10;
+            nSum += d % 10;
+            isSecond = !isSecond;
+        }
+        return (nSum % 10 == 0);
+    }
 }

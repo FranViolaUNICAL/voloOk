@@ -1,30 +1,47 @@
 {
   "userList" : [ {
-    "name" : "nome",
-    "surname" : "cognome",
-    "email" : "email@prova.it",
-    "password" : "password",
-    "fidelityPoints" : 0,
-    "luogoDiNascita" : "luogoDiNascita",
-    "regioneDiNascita" : "RegioneDiNascita",
-    "dataDiNascita" : "19/09/1980"
-  }, {
-    "name" : "Chiara",
-    "surname" : "De Santis",
-    "email" : "chiaradesantis@gmail.com",
+    "name" : "francesco",
+    "surname" : "viola",
+    "email" : "franviola98@gmail.com",
     "password" : "palmi24",
     "fidelityPoints" : 0,
     "luogoDiNascita" : "Palmi",
     "regioneDiNascita" : "Calabria",
-    "dataDiNascita" : "19/08/2003"
+    "dataDiNascita" : "13/08/2003",
+    "userId" : "NMW6S2J",
+    "lastPurchaseDate" : "07/06/24 11:23:27"
   }, {
-    "name" : "Francesco",
-    "surname" : "Viola",
-    "email" : "franviola03@gmail.com",
-    "password" : "parademisi56",
+    "name" : "Chiara",
+    "surname" : "De Santis",
+    "email" : "chiaradesantis@gmail.com",
+    "password" : "chiarasonoio",
     "fidelityPoints" : 0,
     "luogoDiNascita" : "Palmi",
     "regioneDiNascita" : "Calabria",
-    "dataDiNascita" : "13/08/2003"
+    "dataDiNascita" : "19/08/2003",
+    "userId" : "CJKWYW5",
+    "lastPurchaseDate" : "07/06/24 19:14:36"
+  }, {
+    "name" : "Francesco",
+    "surname" : "Viola",
+    "email" : "franco@gmail.com",
+    "password" : "palmi2222",
+    "fidelityPoints" : 0,
+    "luogoDiNascita" : "Palmi",
+    "regioneDiNascita" : "Calabria",
+    "dataDiNascita" : "13/08/2003",
+    "userId" : "HRMCZ1I",
+    "lastPurchaseDate" : "12/06/24 22:34:02"
+  }, {
+    "name" : "Franco",
+    "surname" : "Casco",
+    "email" : "thread@ILoveMultiThreading.com",
+    "password" : "Palsnid",
+    "fidelityPoints" : 0,
+    "luogoDiNascita" : "Reggio Calabria",
+    "regioneDiNascita" : "Calabria",
+    "dataDiNascita" : "13/09/1993",
+    "userId" : "0DN2IFA",
+    "lastPurchaseDate" : "12/06/24 22:41:05"
   } ]
 }

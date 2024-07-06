@@ -28,7 +28,9 @@ public class SingletonListsFactory {
                     String luogoDiNascita = (String) ((Map<?, ?>) o).get("luogoDiNascita");
                     String regioneDiNascita = (String) ((Map<?, ?>) o).get("regioneDiNascita");
                     String dataDiNascita = (String) ((Map<?, ?>) o).get("dataDiNascita");
-                    User u = new User(name, surname, email, password, luogoDiNascita, regioneDiNascita, dataDiNascita);
+                    String userId = (String) ((Map<?, ?>) o).get("userId");
+                    String lastPurchaseDate = (String) ((Map<?, ?>) o).get("lastPurchaseDate");
+                    User u = new User(name, surname, email, password, luogoDiNascita, regioneDiNascita, dataDiNascita, userId, lastPurchaseDate);
                     ret.add(u);
                 }
                 break;
@@ -71,6 +73,18 @@ public class SingletonListsFactory {
                     ret.add(b);
                 }
                 break;
+            case "promoList":
+                for(Object o : mainMap2){
+                    String description = (String) ((Map<?, ?>) o).get("description");
+                    String code = (String) ((Map<?, ?>) o).get("code");
+                    String endDate = (String) ((Map<?, ?>) o).get("endDate");
+                    String origin = (String) ((Map<?, ?>) o).get("origin");
+                    String destination = (String) ((Map<?, ?>) o).get("destination");
+                    boolean fidelityOnly = (Boolean) ((Map<?,?>) o).get("fidelityOnly");
+                    double discountFactor = (Double) ((Map<?,?>) o).get("discountFactor");
+                    Promo p = new Promo(description, code, endDate, origin, destination, fidelityOnly, discountFactor);
+                    ret.add(p);
+                }
         }
         return ret;
     }

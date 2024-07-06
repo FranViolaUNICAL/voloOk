@@ -2,6 +2,8 @@ package org.serverSide.components.units;
 
 import org.serverSide.components.utils.RandomStringGenerator;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 
 public class User implements Unit{
@@ -32,6 +34,20 @@ public class User implements Unit{
         this.dataDiNascita = dataDiNascita;
         int IDLENGTH = 7;
         userId = RandomStringGenerator.generateRandomString(IDLENGTH);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
+        this.lastPurchaseDate = sdf.format(new Date());
+    }
+
+    public User(String name, String surname, String email, String password, String luogoDiNascita, String regioneDiNascita, String dataDiNascita, String userId, String lastPurchaseDate){
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.password = password;
+        this.luogoDiNascita = luogoDiNascita;
+        this.regioneDiNascita = regioneDiNascita;
+        this.dataDiNascita = dataDiNascita;
+        this.userId = userId;
+        this.lastPurchaseDate = lastPurchaseDate;
     }
     public String getName() {
         return name;

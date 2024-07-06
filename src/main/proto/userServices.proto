@@ -6,10 +6,39 @@ service UserService {
   rpc RegisterUser(RegisterUserRequest) returns (RegisterUserResponse); //IMPLEMENTATO
   rpc LoginUser(LoginUserRequest) returns (LoginUserResponse); //IMPLEMENTATO
   rpc BookFlight(FlightBookRequest) returns (FlightBookResponse); //IMPLEMENTATO
+  rpc CancelBookFlight(CancelBookFlightRequest) returns (CancelBookFlightResponse); //IMPLEMENTATO
   rpc PurchaseTicket(PurchaseTicketRequest) returns (PurchaseTicketResponse); //IMPLEMENTATO
   rpc CheckFlightAvailability(CheckFlightAvailabilityRequest) returns (CheckFlightAvailabilityResponse); //IMPLEMENTATO
   rpc ChangeFlightDate(ChangeFlightDateRequest) returns (ChangeFlightDateResponse); //IMPLEMENTATO
   rpc ActuallyChangeFlightDate(ActuallyChangeFlightDateRequest) returns (ActuallyChangeFlightDateResponse); //IMPLEMENTATO
+  rpc NotifyClient(NotifyClientRequest) returns (NotifyClientResponse);
+}
+message NotifyClientRequest{
+  bool isRegistered = 1;
+}
+
+message NotifyClientResponse{
+  repeated Promo promo = 1;
+}
+
+message Promo{
+  string description = 1;
+  string code = 2;
+  string endDate = 3;
+  string origin = 4;
+  string destination = 5;
+  bool fidelityOnly = 6;
+  double discountFactor = 7;
+}
+
+message CancelBookFlightRequest{
+  string flightId = 1;
+  string email = 2;
+}
+
+message CancelBookFlightResponse{
+  string message = 1;
+  bool success = 2;
 }
 
 message RegisterUserRequest {
@@ -25,7 +54,18 @@ message RegisterUserRequest {
 message RegisterUserResponse {
   bool success = 1;
   string message = 2;
-  string userId = 3;
+}
+
+message User {
+  string email = 1;
+  string password = 2;
+  string luogoDiNascita = 3;
+  string regioneDiNascita = 4;
+  string dataDiNascita = 5;
+  string name = 6;
+  string surname = 7;
+  string userId = 8;
+  string lastPurchaseDate = 9;
 }
 
 message LoginUserRequest {
@@ -36,6 +76,7 @@ message LoginUserRequest {
 message LoginUserResponse {
   bool success = 1;
   string message = 2;
+  User user = 3;
 }
 
 message FlightBookRequest {
