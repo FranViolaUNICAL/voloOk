@@ -66,6 +66,6 @@ public class Booking implements Unit{
 
     @Override
     public String toString(){
-        return bookingId;
+        return bookingId + " " + "Flight: " + flightId + " User: " + email;
     }
 }

@@ -77,6 +77,6 @@ public class Flight implements Unit{
     }
 
     public String toString(){
-        return flightId;
+        return flightId + " from: " + origin + " to: " + destination + " departing at: " + departureTime + " scheduled to arrive at: " + arrivalTime;
     }
 }

@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="org.serverSide.serverGUI.ServerGUI">
+  <grid id="27dc6" binding="contentPane" layout-manager="GridLayoutManager" row-count="14" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="10" left="10" bottom="10" right="10"/>
+    <constraints>
+      <xy x="20" y="20" width="600" height="431"/>
+    </constraints>
+    <properties>
+      <minimumSize width="600" height="300"/>
+      <preferredSize width="600" height="500"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <component id="69789" class="javax.swing.JButton" binding="promoCleanupButton" default-binding="true">
+        <constraints>
+          <grid row="4" column="3" row-span="3" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Update/Reset Promos"/>
+        </properties>
+      </component>
+      <component id="c5f02" class="javax.swing.JButton" binding="ticketCleanupButton" default-binding="true">
+        <constraints>
+          <grid row="8" column="3" row-span="3" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Update/Reset Tickets"/>
+        </properties>
+      </component>
+      <component id="80fc0" class="javax.swing.JButton" binding="flightCleanupButton" default-binding="true">
+        <constraints>
+          <grid row="1" column="3" row-span="2" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <hideActionText value="false"/>
+          <text value="Update/Reset Flights"/>
+        </properties>
+      </component>
+      <component id="a2617" class="javax.swing.JButton" binding="bookingCleanupButton" default-binding="true">
+        <constraints>
+          <grid row="12" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Update/Reset Bookings"/>
+        </properties>
+      </component>
+      <scrollpane id="fd224" binding="flightsScrollPane">
+        <constraints>
+          <grid row="1" column="0" row-span="2" col-span="3" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="a5234" class="javax.swing.JTextArea" binding="flightTextArea">
+            <constraints/>
+            <properties>
+              <editable value="false"/>
+            </properties>
+          </component>
+        </children>
+      </scrollpane>
+      <component id="d9830" class="javax.swing.JLabel" binding="flightLabel">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="All Flights"/>
+        </properties>
+      </component>
+      <scrollpane id="c381a" binding="promoScrollPane">
+        <constraints>
+          <grid row="4" column="0" row-span="3" col-span="3" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="eed9d" class="javax.swing.JTextArea" binding="promoTextArea">
+            <constraints/>
+            <properties/>
+          </component>
+        </children>
+      </scrollpane>
+      <component id="ad982" class="javax.swing.JLabel" binding="promoLabel">
+        <constraints>
+          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="All Promotions"/>
+        </properties>
+      </component>
+      <scrollpane id="7a866" binding="ticketScrollPane">
+        <constraints>
+          <grid row="8" column="0" row-span="3" col-span="3" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="9479a" class="javax.swing.JTextArea" binding="ticketTextArea">
+            <constraints/>
+            <properties/>
+          </component>
+        </children>
+      </scrollpane>
+      <component id="6087c" class="javax.swing.JLabel" binding="ticketLabel">
+        <constraints>
+          <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="All Tickets"/>
+        </properties>
+      </component>
+      <scrollpane id="e6040" binding="bookingScrollpane">
+        <constraints>
+          <grid row="12" column="0" row-span="1" col-span="3" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="9559c" class="javax.swing.JTextArea" binding="bookingTextArea">
+            <constraints/>
+            <properties/>
+          </component>
+        </children>
+      </scrollpane>
+      <component id="83306" class="javax.swing.JButton" binding="addPromotionButton" default-binding="true">
+        <constraints>
+          <grid row="13" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Add Promotion"/>
+        </properties>
+      </component>
+      <component id="1f100" class="javax.swing.JButton" binding="addFlightButton" default-binding="true">
+        <constraints>
+          <grid row="13" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Add Flight"/>
+        </properties>
+      </component>
+      <component id="69103" class="javax.swing.JLabel" binding="bookingLabel">
+        <constraints>
+          <grid row="11" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="All Bookings"/>
+        </properties>
+      </component>
+      <component id="8438d" class="javax.swing.JTextField" binding="searchFlightTextField">
+        <constraints>
+          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <font style="2"/>
+          <text value="FlightID..."/>
+          <toolTipText value="Insert FlightID to Search Flight"/>
+        </properties>
+      </component>
+      <component id="e704" class="javax.swing.JButton" binding="searchFlightButton">
+        <constraints>
+          <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Search"/>
+        </properties>
+      </component>
+      <component id="fb555" class="javax.swing.JTextField" binding="searchPromoTextField">
+        <constraints>
+          <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <font style="2"/>
+          <text value="Promo Code..."/>
+          <toolTipText value="Insert Promo Code to Search Promos"/>
+        </properties>
+      </component>
+      <component id="d55a6" class="javax.swing.JTextField" binding="searchTicketTextField">
+        <constraints>
+          <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <font style="2"/>
+          <text value="TicketID..."/>
+          <toolTipText value="Insert Ticket ID to Search Ticket"/>
+        </properties>
+      </component>
+      <component id="1171e" class="javax.swing.JTextField" binding="searchBookingTextField">
+        <constraints>
+          <grid row="11" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <font style="2"/>
+          <text value="BookingID..."/>
+          <toolTipText value="Insert BookingID to Search Booking"/>
+        </properties>
+      </component>
+      <component id="ae2b4" class="javax.swing.JButton" binding="searchPromoButton">
+        <constraints>
+          <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Search"/>
+        </properties>
+      </component>
+      <component id="819d5" class="javax.swing.JButton" binding="searchBookingButton">
+        <constraints>
+          <grid row="11" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Search"/>
+        </properties>
+      </component>
+      <component id="a8d92" class="javax.swing.JButton" binding="searchTicketButton">
+        <constraints>
+          <grid row="7" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Search"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>

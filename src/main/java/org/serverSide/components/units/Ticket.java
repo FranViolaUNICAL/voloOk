@@ -55,7 +55,7 @@ public class Ticket implements Unit{
     }
     @Override
     public String toString() {
-        return ticketId;
+        return ticketId + " Flight: " + flightId + " User: " + passengerEmail;
     }
 
 }

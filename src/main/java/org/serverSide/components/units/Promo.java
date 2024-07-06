@@ -74,4 +74,8 @@ public class Promo implements Unit{
     public int hashCode() {
         return Objects.hash(code);
     }
+
+    public String toString(){
+        return description;
+    }
 }
