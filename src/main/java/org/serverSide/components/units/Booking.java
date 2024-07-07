@@ -10,7 +10,7 @@ public class Booking implements Unit{
     private final String name;
     private final String surname;
     private final String email;
-    private final int bookedTicketsNum;
+    private int bookedTicketsNum;
 
     public Booking(String flightId, String name, String surname, String email, int bookedTicketsNum){
         int IDLENGTH = 8;
@@ -49,6 +49,10 @@ public class Booking implements Unit{
 
     public int getBookedTicketsNum() {
         return bookedTicketsNum;
+    }
+
+    public void deductBookedTicketsNum(){
+        bookedTicketsNum--;
     }
 
     @Override

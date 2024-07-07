@@ -1,10 +1,9 @@
 package org.serverSide.components.factories;
 
+import org.serverSide.components.singletonLists.BookingList;
 import org.serverSide.components.singletonLists.PromoList;
-import org.serverSide.components.units.Flight;
-import org.serverSide.components.units.Promo;
-import org.serverSide.components.units.Unit;
-import org.serverSide.components.units.User;
+import org.serverSide.components.singletonLists.TicketList;
+import org.serverSide.components.units.*;
 import user.UserServices;
 
 import java.util.ArrayList;
@@ -136,6 +135,75 @@ public class UserServicesFactory {
         }
         return UserServices.NotifyClientResponse.newBuilder()
                 .addAllPromo(listResponse)
+                .build();
+    }
+
+    public static UserServices.FetchAllTicketsResponse createFetchAllTicketsResponse(String email){
+        List<UserServices.Ticket> lTicket = new ArrayList<>();
+        List<Unit> tl = TicketList.getInstance().getTicketList();
+        for(Unit uT : tl) {
+            Ticket t = (Ticket) uT;
+            if (t.getPassengerEmail().equals(email)) {
+                UserServices.Ticket tResponse = createTicket(t);
+                lTicket.add(tResponse);
+            }
+        }
+        if(!lTicket.isEmpty()) {
+            return UserServices.FetchAllTicketsResponse.newBuilder()
+                    .setSuccess(true)
+                    .addAllTickets(lTicket)
+                    .build();
+        }
+        else{
+            return UserServices.FetchAllTicketsResponse.newBuilder()
+                    .setSuccess(false)
+                    .addAllTickets(lTicket)
+                    .build();
+        }
+    }
+
+    private static UserServices.Ticket createTicket(Ticket t){
+        return UserServices.Ticket.newBuilder()
+                .setEmail(t.getPassengerEmail())
+                .setTicketId(t.getTicketId())
+                .setPassengerName(t.getPassengerName())
+                .setPassengerSurname(t.getPassengerSurname())
+                .setFlightId(t.getFlightId())
+                .build();
+    }
+
+    public static UserServices.FetchAllBookingsResponse createFetchAllBookingsResponse(String email){
+        List<UserServices.Booking> lBooking = new ArrayList<>();
+        List<Unit> bl = BookingList.getInstance().getBookingList();
+        for(Unit uB : bl) {
+            Booking b = (Booking) uB;
+            if (b.getEmail().equals(email)) {
+                UserServices.Booking tResponse = createBooking(b);
+                lBooking.add(tResponse);
+            }
+        }
+        if(!lBooking.isEmpty()) {
+            return UserServices.FetchAllBookingsResponse.newBuilder()
+                    .setSuccess(true)
+                    .addAllBookings(lBooking)
+                    .build();
+        }
+        else{
+            return UserServices.FetchAllBookingsResponse.newBuilder()
+                    .setSuccess(false)
+                    .addAllBookings(lBooking)
+                    .build();
+        }
+    }
+
+    private static UserServices.Booking createBooking(Booking b){
+        return UserServices.Booking.newBuilder()
+                .setBookingId(b.getBookingId())
+                .setEmail(b.getEmail())
+                .setName(b.getName())
+                .setSurname(b.getSurname())
+                .setFlightId(b.getFlightId())
+                .setBookedTicketsNum(b.getBookedTicketsNum())
                 .build();
     }
 

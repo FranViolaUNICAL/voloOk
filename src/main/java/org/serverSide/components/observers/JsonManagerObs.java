@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class JsonManagerObs implements Observer{
+public class JsonManagerObs extends SubjectAbstract implements Observer{
     public static final File USERJSON = new File("src/userDatabase.json");
     public static final File FLIGHTJSON = new File("src/flightDatabase.json");
     public static final File TICKETJSON = new File("src/ticketDatabase.json");
@@ -49,6 +49,7 @@ public class JsonManagerObs implements Observer{
                 ObjectMapper mapper = ObjectMapperSingleton.getInstance().getObjectMapper();
                 mapper.writerWithDefaultPrettyPrinter().writeValue(PROMOJSON, promolist);
             }
+            notifyObservers();
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -84,8 +85,14 @@ public class JsonManagerObs implements Observer{
             if(f.getFlightId().equals(flightId) && f.getAvailableSeats() >= 1 && checkLuhn(cardNumber)){
                 for(Unit uB : lB){
                     Booking b = (Booking) uB;
+
                     if(b.getEmail().equals(email) && b.getFlightId().equals(flightId)){
-                        BookingList.getInstance().remove(uB);
+                        if(b.getBookedTicketsNum() > 1){
+                            b.deductBookedTicketsNum();
+                        }
+                        else{
+                            BookingList.getInstance().remove(uB);
+                        }
                     }
                 }
                 return true;
@@ -206,4 +213,5 @@ public class JsonManagerObs implements Observer{
         }
         return (nSum % 10 == 0);
     }
+
 }

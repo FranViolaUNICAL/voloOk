@@ -184,5 +184,12 @@ public class UserServicesImpl extends UserServiceGrpc.UserServiceImplBase {
         });
     }
 
+    public void fetchAllTickets(UserServices.FetchAllTicketsRequest request, StreamObserver<UserServices.FetchAllTicketsResponse> responseObserver) {
+        ThreadPoolManager.getExecutorService().execute(() -> {
+            UserServices.FetchAllTicketsResponse response = UserServicesFactory.createFetchAllTicketsResponse(request.getEmail());
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+        });
 
+    }
 }

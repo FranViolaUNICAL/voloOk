@@ -1,4 +1,5 @@
 package org.serverSide.serverGUI;
+import org.serverSide.components.observers.JsonManagerObs;
 import org.serverSide.components.observers.Observer;
 import org.serverSide.components.observers.Subject;
 import org.serverSide.components.singletonLists.BookingList;
@@ -181,11 +182,9 @@ public class ServerGUI extends JFrame implements Observer {
 
     @Override
     public void update(Subject subject) {
-        if(subject.getClass() == TicketList.class){
-            populateTickets();
-        }
-        if(subject.getClass() == BookingList.class){
+        if(subject.getClass() == JsonManagerObs.class){
             populateBookings();
+            populateTickets();
         }
     }
 }
