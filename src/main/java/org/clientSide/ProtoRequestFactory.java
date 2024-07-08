@@ -79,5 +79,31 @@ public class ProtoRequestFactory {
                 .build();
     }
 
+    public static UserServices.FetchAllBookingsRequest fetchMyBookings(String email){
+        return UserServices.FetchAllBookingsRequest.newBuilder()
+                .setEmail(email)
+                .build();
+    }
+
+    public static UserServices.FetchAllTicketsRequest fetchMyTickets(String email){
+        return UserServices.FetchAllTicketsRequest.newBuilder()
+                .setEmail(email)
+                .build();
+    }
+
+    public static UserServices.PromoCheckRequest checkPromo(String promoCode, String country, String flightId){
+        return UserServices.PromoCheckRequest.newBuilder()
+                .setPromoCode(promoCode)
+                .setCountryCode(country)
+                .setFlightId(flightId)
+                .build();
+    }
+
+    public static UserServices.SearchFlightRequest searchFlight(String flightId){
+        return UserServices.SearchFlightRequest.newBuilder()
+                .setFlightId(flightId)
+                .build();
+    }
+
 
 }

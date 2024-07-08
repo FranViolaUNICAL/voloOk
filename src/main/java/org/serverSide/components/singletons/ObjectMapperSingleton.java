@@ -12,7 +12,7 @@ public class ObjectMapperSingleton {
         objectMapper = new ObjectMapper();
     }
 
-    public static synchronized ObjectMapperSingleton getInstance() throws IOException {
+    public static synchronized ObjectMapperSingleton getInstance(){
         if (instance == null) {
             instance = new ObjectMapperSingleton();
         }

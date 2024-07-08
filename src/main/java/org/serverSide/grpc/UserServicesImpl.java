@@ -190,6 +190,29 @@ public class UserServicesImpl extends UserServiceGrpc.UserServiceImplBase {
             responseObserver.onNext(response);
             responseObserver.onCompleted();
         });
+    }
 
+    public void fetchAllBookings(UserServices.FetchAllBookingsRequest request, StreamObserver<UserServices.FetchAllBookingsResponse> responseObserver) {
+        ThreadPoolManager.getExecutorService().execute(() -> {
+            UserServices.FetchAllBookingsResponse response = UserServicesFactory.createFetchAllBookingsResponse(request.getEmail());
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+        });
+    }
+
+    public void promoCheck(UserServices.PromoCheckRequest request, StreamObserver<UserServices.PromoCheckResponse> responseObserver){
+        ThreadPoolManager.getExecutorService().execute(() -> {
+            UserServices.PromoCheckResponse response = UserServicesFactory.createPromoCheckResponse(request.getPromoCode(), request.getCountryCode(), request.getFlightId());
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+        });
+    }
+
+    public void searchFlight(UserServices.SearchFlightRequest request, StreamObserver<UserServices.SearchFlightResponse> responseObserver){
+        ThreadPoolManager.getExecutorService().execute(() -> {
+            UserServices.SearchFlightResponse response = UserServicesFactory.createSearchFlightResponse(request.getFlightId());
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+        });
     }
 }

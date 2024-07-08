@@ -14,7 +14,31 @@ service UserService {
   rpc NotifyClient(NotifyClientRequest) returns (NotifyClientResponse);
   rpc FetchAllTickets(FetchAllTicketsRequest) returns (FetchAllTicketsResponse);
   rpc FetchAllBookings(FetchAllBookingsRequest) returns (FetchAllBookingsResponse);
+  rpc PromoCheck(PromoCheckRequest) returns (PromoCheckResponse);
+  rpc SearchFlight(SearchFlightRequest) returns (SearchFlightResponse);
 }
+message SearchFlightRequest{
+  string flightId = 1;
+}
+
+message SearchFlightResponse{
+  string destinationCountry = 1;
+  int32 price = 2;
+  bool success = 3;
+}
+
+message PromoCheckRequest{
+  string promoCode = 1;
+  string countryCode = 2;
+  string flightId = 3;
+}
+
+message PromoCheckResponse{
+  bool success = 1;
+  double discountFactor = 4;
+}
+
+
 message FetchAllTicketsRequest{
   string email = 1;
 }

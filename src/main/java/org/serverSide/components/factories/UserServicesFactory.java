@@ -1,11 +1,14 @@
 package org.serverSide.components.factories;
 
 import org.serverSide.components.singletonLists.BookingList;
+import org.serverSide.components.singletonLists.FlightList;
 import org.serverSide.components.singletonLists.PromoList;
 import org.serverSide.components.singletonLists.TicketList;
 import org.serverSide.components.units.*;
+import org.serverSide.grpc.PromoManager;
 import user.UserServices;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -207,6 +210,56 @@ public class UserServicesFactory {
                 .build();
     }
 
+    public static UserServices.PromoCheckResponse createPromoCheckResponse(String promoCode, String country, String flightId){
+        boolean success = false;
+        String aita = null;
+        double discountFactor = 0;
+        List<Unit> flightList = FlightList.getInstance().getFlightList();
+        for(Unit uF: flightList){
+            Flight f = (Flight) uF;
+            if(f.getFlightId().equals(flightId)){
+                aita = f.getDestination();
+            }
+        }
+        List<Unit> promoList = PromoList.getInstance().getPromoList();
+        for(Unit uP : promoList){
+            Promo p = (Promo) uP;
+            if(p.getCode().equals(promoCode) && !(aita == null) && (p.getDestination().equals(country))){
+                try {
+                     success = PromoManager.isAirportInCountry(aita, country);
+                     discountFactor = p.getDiscountFactor();
+                }catch (IOException e){
+                    e.printStackTrace();
+                }
+                break;
+            }
+        }
+        return UserServices.PromoCheckResponse.newBuilder()
+                .setSuccess(success)
+                .setDiscountFactor(discountFactor)
+                .build();
+    }
 
 
+    public static UserServices.SearchFlightResponse createSearchFlightResponse(String flightId) {
+        String destination = null;
+        int price = -1;
+        List<Unit> flightList = FlightList.getInstance().getFlightList();
+        for(Unit uF : flightList){
+            Flight f = (Flight) uF;
+            if(f.getFlightId().equals(flightId)){
+                try {
+                    destination = PromoManager.findCountry(f.getDestination());
+                    price = f.getPrice();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return UserServices.SearchFlightResponse.newBuilder()
+                .setSuccess(!(destination == null))
+                .setDestinationCountry(destination)
+                .setPrice(price)
+                .build();
+    }
 }

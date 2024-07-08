@@ -13,7 +13,6 @@ import javax.swing.*;
 import java.util.List;
 
 public class ServerGUI extends JFrame implements Observer {
-    private JPanel contentPane;
     private JButton promoCleanupButton;
     private JButton flightCleanupButton;
     private JButton ticketCleanupButton;
@@ -42,6 +41,8 @@ public class ServerGUI extends JFrame implements Observer {
     private JButton searchBookingButton;
     private JButton removeFlightButton;
     private JButton removePromotionButton;
+    private JPanel contentPane;
+
 
     public ServerGUI(){
         setTitle("VoloOk Server Interface");

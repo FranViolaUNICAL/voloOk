@@ -1,11 +1,11 @@
 {
   "promoList" : [ {
-    "description" : "Ciao! Questa é una promo di prova",
-    "code" : "PROVA",
-    "endDate" : "06/07/2023 13:11:00",
+    "description" : "Vola verso tutti gli aeroporti francesi con il 20% di sconto!",
+    "code" : "FRANCIA20",
+    "endDate" : "09/07/2024 18:00:00",
     "origin" : "LIN",
-    "destination" : "SUF",
-    "fidelityOnly" : true,
+    "destination" : "FR",
+    "fidelityOnly" : false,
     "discountFactor" : 0.8
   } ]
 }

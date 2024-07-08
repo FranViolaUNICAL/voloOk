@@ -7,5 +7,13 @@
     "flightId" : "SUFLIN1308",
     "price" : 150,
     "availableSeats" : 120
+  }, {
+    "departureTime" : "13/09/2024 15:00:00",
+    "arrivalTime" : "13/09/2024 17:00:00",
+    "origin" : "LIN",
+    "destination" : "CDG",
+    "flightId" : "LINCDG1309",
+    "price" : 99,
+    "availableSeats" : 149
   } ]
 }

@@ -4,14 +4,18 @@
     "flightId" : "SUFLIN1308",
     "passengerName" : "Francesco",
     "passengerSurname" : "Viola",
-    "passengerEmail" : "franviola98"
-  },
-    {
-      "ticketId" : "NDHDIISCOM",
-      "flightId" : "SUFLIN1308",
-      "passengerName" : "Chiara",
-      "passengerSurname" : "DeSantis",
-      "passengerEmail" : "chiaradesantis@gmail.com"
-    }
-  ]
+    "passengerEmail" : "franviola98@gmail.com"
+  }, {
+    "ticketId" : "NDHDIISCOM",
+    "flightId" : "SUFLIN1308",
+    "passengerName" : "Chiara",
+    "passengerSurname" : "DeSantis",
+    "passengerEmail" : "chiaradesantis@gmail.com"
+  }, {
+    "ticketId" : "6J9EFREPB3",
+    "flightId" : "LINCDG1309",
+    "passengerName" : "Francesco",
+    "passengerSurname" : "Viola",
+    "passengerEmail" : "franviola98@gmail.com"
+  } ]
 }

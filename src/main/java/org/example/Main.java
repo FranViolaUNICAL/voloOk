@@ -1,5 +1,10 @@
 package org.example;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.serverSide.components.singletons.ObjectMapperSingleton;
+
+import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -7,13 +12,15 @@ import java.util.Date;
 
 public class Main {
     public static void main(String[] args) throws IOException, ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy' 'HH:mm:ss");
-        String date1String = "03/06/2024 10:55:00";
-        Date date1 = sdf.parse(date1String);
-        String date2String = "06/06/2024 10:55:00";
-        Date date2 = sdf.parse(date2String);
-        long diff = (date2.getTime() - date1.getTime());
-        System.out.println(diff);
-        System.out.println(diff / 1000 / 60 / 60 / 24);
+        ObjectMapper m = ObjectMapperSingleton.getInstance().getObjectMapper();
+        JsonNode root = m.readTree(new File("src/airports.json"));
+        int n = 0;
+        for(JsonNode node : root){
+            String IATA = node.path("iata").asText();
+            String country = node.path("country").asText();
+            System.out.println(country);
+            n++;
+        }
+        System.out.println(n);
     }
 }

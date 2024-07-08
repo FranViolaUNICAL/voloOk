@@ -4,6 +4,7 @@ import io.grpc.Channel;
 import io.grpc.Grpc;
 import io.grpc.InsecureChannelCredentials;
 import io.grpc.ManagedChannel;
+import org.clientSide.clientGUI.ClientGUI;
 import org.serverSide.components.units.User;
 import user.UserServiceGrpc;
 import user.UserServices;
@@ -17,8 +18,8 @@ import static java.lang.System.exit;
 
 public class Client {
     private final UserServiceGrpc.UserServiceBlockingStub blockingStub;
-    private Map<String, Double> promos = new HashMap<>();
-    private boolean isLoggedIn = false;
+    public Map<String, Double> promos = new HashMap<>();
+    public boolean isLoggedIn = false;
 
     private String email;
 
@@ -30,8 +31,18 @@ public class Client {
         User u = UserAccessManager.login(blockingStub,email,password);
         if(u != null){
             this.email = email;
+            isLoggedIn = true;
         }
         return u;
+    }
+
+    public void logout(){
+        this.email = "";
+        isLoggedIn = false;
+    }
+
+    public String getEmail(){
+        return email;
     }
 
     public boolean register(String email, String name, String surname, String luogoDiNascita, String RegioneDiNascita, String dataDiNascita, String password) {
@@ -54,8 +65,22 @@ public class Client {
         return blockingStub.bookFlight(ProtoRequestFactory.bookFlight(name,surname,flightId,email,n));
     }
 
-    public UserServices.PurchaseTicketResponse purchaseTicket(String flightId, String name, String surname, String email, String cardN){
-        return blockingStub.purchaseTicket(ProtoRequestFactory.purchaseTicket(flightId, name, surname, email, cardN));
+    public UserServices.PurchaseTicketResponse purchaseTicket(String flightId, String name, String surname, String email, String cardN,String promoCode){
+        String country = blockingStub.searchFlight(ProtoRequestFactory.searchFlight(flightId)).getDestinationCountry();
+        if(blockingStub.promoCheck(ProtoRequestFactory.checkPromo(promoCode, country, flightId)).getSuccess()){
+            return blockingStub.purchaseTicket(ProtoRequestFactory.purchaseTicket(flightId, name, surname, email, cardN));
+        }else{
+            return null;
+        }
+    }
+
+    public int fetchFlightPrice(String flightID){
+        return blockingStub.searchFlight(ProtoRequestFactory.searchFlight(flightID)).getPrice();
+    }
+
+    public double fetchDiscountFactor(String promoCode, String flightId){
+        String country = blockingStub.searchFlight(ProtoRequestFactory.searchFlight(flightId)).getDestinationCountry();
+        return blockingStub.promoCheck(ProtoRequestFactory.checkPromo(promoCode,country,flightId)).getDiscountFactor();
     }
 
     public UserServices.CheckFlightAvailabilityResponse checkFlightAvailability(String origin, String destination, String date){
@@ -68,6 +93,14 @@ public class Client {
 
     public UserServices.ActuallyChangeFlightDateResponse chooseFlightToChangeDate(String bookingId, String newFlightId, int cost, String cardN){
         return blockingStub.actuallyChangeFlightDate(ProtoRequestFactory.chooseFlightToChangeDate(bookingId,newFlightId,cost,cardN));
+    }
+
+    public UserServices.FetchAllBookingsResponse fetchMyBookings(String email){
+        return blockingStub.fetchAllBookings(ProtoRequestFactory.fetchMyBookings(email));
+    }
+
+    public UserServices.FetchAllTicketsResponse fetchMyTickets(String email){
+        return blockingStub.fetchAllTickets(ProtoRequestFactory.fetchMyTickets(email));
     }
 
     boolean isLoggedIn(){
@@ -83,62 +116,7 @@ public class Client {
         ManagedChannel channel = Grpc.newChannelBuilder(target, InsecureChannelCredentials.create()).build();
         Client c = new Client(channel);
         new promoThread(c).start();
-        User user;
-        while(true){
-            System.out.println("Select your option");
-            System.out.println("1: login");
-            System.out.println("2: register");
-            System.out.println("3: check Promos");
-            System.out.println("0: exit");
-            Scanner sc = new Scanner(System.in);
-            int choice = Integer.parseInt(sc.nextLine());
-            switch(choice){
-                case 1:
-                    System.out.println("Enter email:");
-                    String email = sc.nextLine();
-                    System.out.println("Enter password");
-                    String password = sc.nextLine();
-                    user = c.login(email,password);
-                    if(user == null){
-                        System.out.println("Login unsuccesfull. Check credentials.");
-                    }else{
-                        c.setLogin();
-                        System.out.println("Logged in as user: " + user.getUserId());
-                        new promoThread(c).start();
-                    }
-                    break;
-                case 2:
-                    System.out.println("Enter email:");
-                    String newEmail = sc.nextLine();
-                    System.out.println("Enter password:");
-                    String newPassword = sc.nextLine();
-                    System.out.println("Enter your name:");
-                    String name = sc.nextLine();
-                    System.out.println("Enter your surname:");
-                    String surname = sc.nextLine();
-                    System.out.println("Enter your city of birth:");
-                    String luogoDiNascita = sc.nextLine();
-                    System.out.println("Enter your region of birth:");
-                    String regioneDiNascita = sc.nextLine();
-                    System.out.println("Enter your date of birth:");
-                    String dataDiNascita = sc.nextLine();
-                    if(c.register(newEmail,name,surname,luogoDiNascita,regioneDiNascita,dataDiNascita,newPassword)){
-                        System.out.println("Registered succesfully");
-                    }
-                    else{
-                        System.out.println("Did not register. Try again");
-                    }
-                    break;
-                case 3:
-                    for(String key : c.promos.keySet()){
-                        System.out.println(key);
-                    }
-                    break;
-                case 0:
-                    System.out.println("Shutting down...");
-                    exit(0);
-            }
-        }
+        new ClientGUI(c);
     }
 
 

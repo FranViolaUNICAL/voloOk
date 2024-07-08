@@ -11,7 +11,7 @@ public class RemovePromoPage extends JFrame {
 
     public RemovePromoPage(){
         setTitle("VoloOk Server Interface");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setContentPane(contentPane);
         pack();
 

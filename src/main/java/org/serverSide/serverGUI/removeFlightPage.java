@@ -11,7 +11,7 @@ public class removeFlightPage extends JFrame {
 
     public removeFlightPage(){
         setTitle("VoloOk Server Interface");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setContentPane(contentPane);
         pack();
 

@@ -7,6 +7,7 @@ import org.serverSide.components.singletonLists.*;
 import org.serverSide.components.threads.CleanupManager;
 import org.serverSide.components.threads.ScheduledCleanup;
 import org.serverSide.components.units.Promo;
+import org.serverSide.serverGUI.LoginPage;
 
 import java.io.IOException;
 import java.util.Timer;
@@ -39,6 +40,7 @@ public class GrpcServer {
         promoList.attach(jsonObserver);
         administratorList.attach(jsonObserver);
         time.schedule(sc,0,86400000 );
+        new LoginPage();
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             System.out.println("Shutting down gRPC server");

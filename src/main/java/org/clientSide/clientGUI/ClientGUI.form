@@ -1,23 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="org.clientSide.clientGUI.ClientGUI">
-  <grid id="27dc6" binding="contentPane" layout-manager="GridLayoutManager" row-count="6" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-    <margin top="10" left="10" bottom="10" right="10"/>
+  <grid id="27dc6" binding="contentPane" layout-manager="GridLayoutManager" row-count="6" column-count="7" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="10" bottom="10" right="10"/>
     <constraints>
-      <xy x="20" y="20" width="500" height="400"/>
+      <xy x="20" y="20" width="613" height="400"/>
     </constraints>
     <properties>
       <preferredSize width="600" height="400"/>
     </properties>
     <border type="none"/>
     <children>
-      <vspacer id="ca3fc">
+      <scrollpane id="2f13d">
         <constraints>
-          <grid row="3" column="3" row-span="3" col-span="2" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+          <grid row="2" column="1" row-span="3" col-span="5" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
-      </vspacer>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="154c4" class="javax.swing.JTextArea" binding="textArea">
+            <constraints/>
+            <properties/>
+          </component>
+        </children>
+      </scrollpane>
       <toolbar id="a26d">
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="5" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
+          <grid row="0" column="0" row-span="2" col-span="7" vsize-policy="0" hsize-policy="6" anchor="1" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="-1" height="10"/>
           </grid>
         </constraints>
@@ -46,50 +54,76 @@
               <text value="Register"/>
             </properties>
           </component>
+          <component id="7d136" class="javax.swing.JToolBar$Separator">
+            <constraints/>
+            <properties/>
+          </component>
+          <component id="ab6a2" class="javax.swing.JButton" binding="myTicketsButton">
+            <constraints/>
+            <properties>
+              <enabled value="false"/>
+              <text value="My Tickets"/>
+              <visible value="true"/>
+            </properties>
+          </component>
+          <component id="75453" class="javax.swing.JToolBar$Separator">
+            <constraints/>
+            <properties/>
+          </component>
+          <component id="37427" class="javax.swing.JButton" binding="myBookingsButton">
+            <constraints/>
+            <properties>
+              <enabled value="false"/>
+              <text value="My Bookings"/>
+              <visible value="true"/>
+            </properties>
+          </component>
+          <component id="42b4" class="javax.swing.JToolBar$Separator">
+            <constraints/>
+            <properties/>
+          </component>
+          <component id="ed772" class="javax.swing.JButton" binding="changeBookingDateButton" default-binding="true">
+            <constraints/>
+            <properties>
+              <enabled value="false"/>
+              <text value="Change Booking Date"/>
+            </properties>
+          </component>
         </children>
       </toolbar>
-      <component id="6d11a" class="javax.swing.JLabel">
-        <constraints>
-          <grid row="1" column="0" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <font name="Unispace" size="26" style="1"/>
-          <foreground color="-9139739"/>
-          <text value="VoloOk"/>
-        </properties>
-      </component>
-      <component id="37427" class="javax.swing.JButton" binding="myBookingsButton">
-        <constraints>
-          <grid row="5" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Button"/>
-          <visible value="false"/>
-        </properties>
-      </component>
-      <component id="ab6a2" class="javax.swing.JButton" binding="myTicketsButton">
-        <constraints>
-          <grid row="4" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Button"/>
-          <visible value="false"/>
-        </properties>
-      </component>
       <component id="613f5" class="javax.swing.JButton" binding="bookFlightButton">
         <constraints>
-          <grid row="3" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Button"/>
+          <horizontalAlignment value="0"/>
+          <text value="Book a Flight"/>
         </properties>
       </component>
-      <component id="2656" class="javax.swing.JButton" binding="searchFlightButton">
+      <component id="2656" class="javax.swing.JButton" binding="buyTicket">
         <constraints>
-          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Button"/>
+          <horizontalAlignment value="0"/>
+          <text value="Buy a Ticket"/>
+        </properties>
+      </component>
+      <component id="a7e3" class="javax.swing.JButton" binding="searchFlightButton">
+        <constraints>
+          <grid row="5" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <horizontalAlignment value="0"/>
+          <text value="Search a Flight"/>
+        </properties>
+      </component>
+      <component id="cfe73" class="javax.swing.JButton" binding="promotionsButton" default-binding="true">
+        <constraints>
+          <grid row="5" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Promotions"/>
         </properties>
       </component>
     </children>

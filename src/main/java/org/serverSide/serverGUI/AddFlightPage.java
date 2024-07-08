@@ -7,6 +7,8 @@ import javax.swing.*;
 
 public class AddFlightPage extends JFrame {
     private JTextField departureTimeField;
+    private JPanel contentPane;
+
     private JTextField arrivalTimeField;
     private JTextField departureField;
     private JTextField destinationField;
@@ -14,11 +16,10 @@ public class AddFlightPage extends JFrame {
     private JTextField numSeatsField;
     private JTextField priceField;
     private JButton createFlightButton;
-    private JPanel contentPane;
 
     public AddFlightPage(){
         setTitle("Add Flight");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setContentPane(contentPane);
         pack();
         createFlightButton.addActionListener(e -> addFlight());

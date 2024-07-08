@@ -15,8 +15,9 @@ public class LoginPage extends JFrame {
     private JButton loginButton;
     private JLabel passwordLabel;
     private JLabel usernameLabel;
-    private JPanel contentPane;
     private JLabel wrongCredentialsLabel;
+    private JPanel contentPane;
+
 
     public LoginPage(){
         setTitle("VoloOk Administrator Login");
