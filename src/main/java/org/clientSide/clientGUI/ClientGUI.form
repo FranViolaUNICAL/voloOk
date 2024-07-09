@@ -3,10 +3,10 @@
   <grid id="27dc6" binding="contentPane" layout-manager="GridLayoutManager" row-count="6" column-count="7" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="10" bottom="10" right="10"/>
     <constraints>
-      <xy x="20" y="20" width="613" height="400"/>
+      <xy x="20" y="20" width="908" height="400"/>
     </constraints>
     <properties>
-      <preferredSize width="600" height="400"/>
+      <preferredSize width="800" height="400"/>
     </properties>
     <border type="none"/>
     <children>
@@ -87,6 +87,28 @@
             <properties>
               <enabled value="false"/>
               <text value="Change Booking Date"/>
+            </properties>
+          </component>
+          <component id="54cb1" class="javax.swing.JToolBar$Separator">
+            <constraints/>
+            <properties/>
+          </component>
+          <component id="aa0a0" class="javax.swing.JButton" binding="cancelBookingButton" default-binding="true">
+            <constraints/>
+            <properties>
+              <enabled value="false"/>
+              <text value="Cancel Booking"/>
+            </properties>
+          </component>
+          <component id="614c3" class="javax.swing.JToolBar$Separator">
+            <constraints/>
+            <properties/>
+          </component>
+          <component id="ccb5c" class="javax.swing.JButton" binding="myFidelityPointsButton" default-binding="true">
+            <constraints/>
+            <properties>
+              <enabled value="false"/>
+              <text value="My Fidelity Points"/>
             </properties>
           </component>
         </children>

@@ -29,8 +29,9 @@ public class SingletonListsFactory {
                     String regioneDiNascita = (String) ((Map<?, ?>) o).get("regioneDiNascita");
                     String dataDiNascita = (String) ((Map<?, ?>) o).get("dataDiNascita");
                     String userId = (String) ((Map<?, ?>) o).get("userId");
+                    int fidelityPoints = (Integer) ((Map<?,?>) o).get("fidelityPoints");
                     String lastPurchaseDate = (String) ((Map<?, ?>) o).get("lastPurchaseDate");
-                    User u = new User(name, surname, email, password, luogoDiNascita, regioneDiNascita, dataDiNascita, userId, lastPurchaseDate);
+                    User u = new User(name, surname, email, password, luogoDiNascita, regioneDiNascita, dataDiNascita, userId, lastPurchaseDate, fidelityPoints);
                     ret.add(u);
                 }
                 break;

@@ -1,11 +1,11 @@
 {
   "promoList" : [ {
-    "description" : "Vola verso tutti gli aeroporti francesi con il 20% di sconto!",
+    "description" : "Usa il codice FRANCIA20 per il 20% di sconto su tutti i voli verso la Francia!",
     "code" : "FRANCIA20",
-    "endDate" : "09/07/2024 18:00:00",
-    "origin" : "LIN",
+    "endDate" : "10/09/2024 15:00:00",
+    "origin" : "IT",
     "destination" : "FR",
-    "fidelityOnly" : false,
+    "fidelityOnly" : true,
     "discountFactor" : 0.8
   } ]
 }

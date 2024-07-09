@@ -6,13 +6,15 @@ import javax.swing.*;
 
 public class RemovePromoPage extends JFrame {
     private JTextField promoCode;
+
     private JButton removePromoButton;
     private JPanel contentPane;
 
+
     public RemovePromoPage(){
+        setContentPane(contentPane);
         setTitle("VoloOk Server Interface");
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setContentPane(contentPane);
         pack();
 
         removePromoButton.addActionListener(e -> removePromo());

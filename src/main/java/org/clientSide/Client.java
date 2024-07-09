@@ -1,39 +1,41 @@
 package org.clientSide;
 
-import io.grpc.Channel;
-import io.grpc.Grpc;
-import io.grpc.InsecureChannelCredentials;
-import io.grpc.ManagedChannel;
+import io.grpc.*;
 import org.clientSide.clientGUI.ClientGUI;
-import org.serverSide.components.units.User;
 import user.UserServiceGrpc;
 import user.UserServices;
-
-import java.lang.reflect.Array;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
-
-import static java.lang.System.exit;
 
 public class Client {
     private final UserServiceGrpc.UserServiceBlockingStub blockingStub;
     public Map<String, Double> promos = new HashMap<>();
     public boolean isLoggedIn = false;
-
     private String email;
+    private int fidelityPoints = 0;
+
+    private String password;
+
+    ClientGUI gui;
 
     public Client(Channel channel){
         this.blockingStub = UserServiceGrpc.newBlockingStub(channel);
     }
 
-    public User login(String email, String password){
-        User u = UserAccessManager.login(blockingStub,email,password);
-        if(u != null){
+    public boolean login(String email, String password){
+        UserServices.LoginUserResponse response = UserAccessManager.login(blockingStub,email,password);
+        boolean check = response.getSuccess();
+        if(check){
             this.email = email;
+            this.password = password;
             isLoggedIn = true;
+            fidelityPoints = response.getUser().getFidelityPoints();
         }
-        return u;
+        return check;
+    }
+
+    public int getFidelityPoints(){
+        return fidelityPoints;
     }
 
     public void logout(){
@@ -46,61 +48,138 @@ public class Client {
     }
 
     public boolean register(String email, String name, String surname, String luogoDiNascita, String RegioneDiNascita, String dataDiNascita, String password) {
-        return UserAccessManager.register(blockingStub, email, name, surname, luogoDiNascita, RegioneDiNascita, dataDiNascita, password);
+        try {
+            return UserAccessManager.register(blockingStub, email, name, surname, luogoDiNascita, RegioneDiNascita, dataDiNascita, password);
+        }catch(StatusRuntimeException e){
+            gui.connectionErrorMode();
+        }
+        return false;
+    }
+
+    public boolean deductFidelityPoints(int pointsToDeduct){
+        System.out.println(pointsToDeduct);
+        try {
+            fidelityPoints = UserAccessManager.login(this.blockingStub, this.email, this.password).getUser().getFidelityPoints();
+            return blockingStub.deductFidelityPoints(ProtoRequestFactory.deductFidelityPoints(pointsToDeduct, email)).getSuccess();
+        }catch (StatusRuntimeException e){
+            gui.connectionErrorMode();
+        }
+        return false;
     }
 
     public void sendNotifications(boolean isRegistered){
         UserServices.NotifyClientRequest request = ProtoRequestFactory.sendNotifications(isRegistered);
-        UserServices.NotifyClientResponse response = blockingStub.notifyClient(request);
-        for(UserServices.Promo p : response.getPromoList()){
-            promos.put(p.getDescription(),p.getDiscountFactor());
+        try {
+            UserServices.NotifyClientResponse response = blockingStub.notifyClient(request);
+            for (UserServices.Promo p : response.getPromoList()) {
+                promos.put(p.getDescription(), p.getDiscountFactor());
+            }
+        }catch (StatusRuntimeException e){
+            gui.connectionErrorMode();
         }
     }
 
     public UserServices.CancelBookFlightResponse CancelFlight(String flightId, String email){
-        return blockingStub.cancelBookFlight(ProtoRequestFactory.cancelBookFlight(flightId,email));
+        try{
+            return blockingStub.cancelBookFlight(ProtoRequestFactory.cancelBookFlight(flightId,email));
+        }catch (StatusRuntimeException e){
+            gui.connectionErrorMode();
+        }
+        return null;
     }
 
     public UserServices.FlightBookResponse bookFlight(String name, String surname, String flightId, String email, int n){
-        return blockingStub.bookFlight(ProtoRequestFactory.bookFlight(name,surname,flightId,email,n));
+        try {
+            return blockingStub.bookFlight(ProtoRequestFactory.bookFlight(name, surname, flightId, email, n));
+        }catch (StatusRuntimeException e){
+            gui.connectionErrorMode();
+        }
+        return null;
     }
 
-    public UserServices.PurchaseTicketResponse purchaseTicket(String flightId, String name, String surname, String email, String cardN,String promoCode){
-        String country = blockingStub.searchFlight(ProtoRequestFactory.searchFlight(flightId)).getDestinationCountry();
-        if(blockingStub.promoCheck(ProtoRequestFactory.checkPromo(promoCode, country, flightId)).getSuccess()){
+    public UserServices.PurchaseTicketResponse purchaseTicket(String flightId, String name, String surname, String email, String cardN){
+        try {
+            if (isLoggedIn) {
+                fidelityPoints = UserAccessManager.login(this.blockingStub, this.email, this.password).getUser().getFidelityPoints();
+            }
             return blockingStub.purchaseTicket(ProtoRequestFactory.purchaseTicket(flightId, name, surname, email, cardN));
-        }else{
-            return null;
+        }catch (StatusRuntimeException e){
+            gui.connectionErrorMode();
         }
+        return null;
     }
 
     public int fetchFlightPrice(String flightID){
-        return blockingStub.searchFlight(ProtoRequestFactory.searchFlight(flightID)).getPrice();
+        try {
+            return blockingStub.searchFlight(ProtoRequestFactory.searchFlight(flightID)).getPrice();
+        }catch (StatusRuntimeException e){
+            gui.connectionErrorMode();
+        }
+        return 0;
     }
 
     public double fetchDiscountFactor(String promoCode, String flightId){
-        String country = blockingStub.searchFlight(ProtoRequestFactory.searchFlight(flightId)).getDestinationCountry();
-        return blockingStub.promoCheck(ProtoRequestFactory.checkPromo(promoCode,country,flightId)).getDiscountFactor();
+        try {
+            String country = blockingStub.searchFlight(ProtoRequestFactory.searchFlight(flightId)).getDestinationCountry();
+            return blockingStub.promoCheck(ProtoRequestFactory.checkPromo(promoCode, country, flightId)).getDiscountFactor();
+        }catch (StatusRuntimeException e){
+            gui.connectionErrorMode();
+        }
+        return 0;
     }
 
     public UserServices.CheckFlightAvailabilityResponse checkFlightAvailability(String origin, String destination, String date){
-        return blockingStub.checkFlightAvailability(ProtoRequestFactory.checkFlightAvailability(origin,destination,date));
+        try {
+            return blockingStub.checkFlightAvailability(ProtoRequestFactory.checkFlightAvailability(origin, destination, date));
+        }catch (StatusRuntimeException e){
+            gui.connectionErrorMode();
+        }
+        return null;
     }
 
     public UserServices.ChangeFlightDateResponse changeFlightDate(String bookingId, String newDepartureDate){
-        return blockingStub.changeFlightDate(ProtoRequestFactory.changeFlightDate(bookingId,newDepartureDate));
+        try {
+            return blockingStub.changeFlightDate(ProtoRequestFactory.changeFlightDate(bookingId, newDepartureDate));
+        }catch (StatusRuntimeException e){
+            gui.connectionErrorMode();
+        }
+        return null;
     }
 
     public UserServices.ActuallyChangeFlightDateResponse chooseFlightToChangeDate(String bookingId, String newFlightId, int cost, String cardN){
-        return blockingStub.actuallyChangeFlightDate(ProtoRequestFactory.chooseFlightToChangeDate(bookingId,newFlightId,cost,cardN));
+        try {
+            return blockingStub.actuallyChangeFlightDate(ProtoRequestFactory.chooseFlightToChangeDate(bookingId, newFlightId, cost, cardN));
+        }catch (StatusRuntimeException e){
+            gui.connectionErrorMode();
+        }
+        return null;
     }
 
     public UserServices.FetchAllBookingsResponse fetchMyBookings(String email){
-        return blockingStub.fetchAllBookings(ProtoRequestFactory.fetchMyBookings(email));
+        try {
+            return blockingStub.fetchAllBookings(ProtoRequestFactory.fetchMyBookings(email));
+        }catch (StatusRuntimeException e){
+            gui.connectionErrorMode();
+        }
+        return null;
     }
 
     public UserServices.FetchAllTicketsResponse fetchMyTickets(String email){
-        return blockingStub.fetchAllTickets(ProtoRequestFactory.fetchMyTickets(email));
+        try {
+            return blockingStub.fetchAllTickets(ProtoRequestFactory.fetchMyTickets(email));
+        }catch (RuntimeException e){
+            gui.connectionErrorMode();
+        }
+        return null;
+    }
+
+    public boolean cancelBooking(String email, String flightId){
+        try{
+            return blockingStub.cancelBookFlight(ProtoRequestFactory.cancelBookFlight(flightId,email)).getSuccess();
+        }catch (StatusRuntimeException e){
+            gui.connectionErrorMode();
+        }
+        return false;
     }
 
     boolean isLoggedIn(){
@@ -115,8 +194,13 @@ public class Client {
         String target = "localhost:50051";
         ManagedChannel channel = Grpc.newChannelBuilder(target, InsecureChannelCredentials.create()).build();
         Client c = new Client(channel);
-        new promoThread(c).start();
-        new ClientGUI(c);
+        ClientGUI gui = new ClientGUI(c);
+        c.gui = gui;
+        try{
+            c.sendNotifications(c.isLoggedIn());
+        }catch (StatusRuntimeException e){
+            gui.connectionErrorMode();
+        }
     }
 
 

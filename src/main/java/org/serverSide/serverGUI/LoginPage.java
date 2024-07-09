@@ -19,10 +19,11 @@ public class LoginPage extends JFrame {
     private JPanel contentPane;
 
 
+
     public LoginPage(){
+        setContentPane(contentPane);
         setTitle("VoloOk Administrator Login");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setContentPane(contentPane);
         pack();
         wrongCredentialsLabel.setVisible(false);
         loginButton.addActionListener(e -> login());

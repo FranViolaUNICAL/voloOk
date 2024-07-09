@@ -12,15 +12,17 @@ public class RegisterForm extends JFrame {
     private JTextField regionField;
     private JTextField passwordField;
     private JTextField nameField;
+
     private JButton registerButton;
-    private JPanel contentPane;
 
     private Client c;
+    private JPanel contentPane;
+
 
     public RegisterForm(Client c){
+        setContentPane(contentPane);
         setTitle("VoloOk Client");
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setContentPane(contentPane);
         pack();
         this.c = c;
 

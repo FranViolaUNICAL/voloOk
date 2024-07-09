@@ -126,7 +126,11 @@ public class CleanupManager {
                     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy' 'HH:mm:ss");
                     Date lastPurchaseDate = sdf.parse(lastPurchase);
                     Date currentDate = new Date();
+                    long timeDifference = currentDate.getTime() - lastPurchaseDate.getTime();
+                    System.out.println(timeDifference);
+                    System.out.println(timeDifference / (1000L * 60 * 60 * 24));
                     if (((currentDate.getTime() - lastPurchaseDate.getTime()) / (1000L * 60 * 60 * 24) >= 730)) {
+                        System.out.println("yes");
                         UserList.getInstance().addFidelityPoints(u, -(u.getFidelityPoints()));
                     }else if(((currentDate.getTime() - lastPurchaseDate.getTime()) /(1000L * 60 * 60 * 24) == 728)){
                         e.sendUnloyaltyEmail(u.getEmail());

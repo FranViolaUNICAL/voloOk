@@ -6,7 +6,7 @@
     "destination" : "LIN",
     "flightId" : "SUFLIN1308",
     "price" : 150,
-    "availableSeats" : 120
+    "availableSeats" : 108
   }, {
     "departureTime" : "13/09/2024 15:00:00",
     "arrivalTime" : "13/09/2024 17:00:00",
@@ -14,6 +14,14 @@
     "destination" : "CDG",
     "flightId" : "LINCDG1309",
     "price" : 99,
-    "availableSeats" : 149
+    "availableSeats" : 145
+  }, {
+    "departureTime" : "15/07/2024 13:00:00",
+    "arrivalTime" : "15/07/2024 15:00:00",
+    "origin" : "SUF",
+    "destination" : "LIN",
+    "flightId" : "SUFLIN1507",
+    "price" : 129,
+    "availableSeats" : 137
   } ]
 }

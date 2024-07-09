@@ -13,6 +13,8 @@ import javax.swing.*;
 import java.util.List;
 
 public class ServerGUI extends JFrame implements Observer {
+    private JPanel contentPane;
+
     private JButton promoCleanupButton;
     private JButton flightCleanupButton;
     private JButton ticketCleanupButton;
@@ -41,13 +43,13 @@ public class ServerGUI extends JFrame implements Observer {
     private JButton searchBookingButton;
     private JButton removeFlightButton;
     private JButton removePromotionButton;
-    private JPanel contentPane;
+
 
 
     public ServerGUI(){
+        setContentPane(contentPane);
         setTitle("VoloOk Server Interface");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setContentPane(contentPane);
         pack();
 
         flightCleanupButton.addActionListener(e -> {new CleanupManager().deleteFlights(); populateFlights();});
@@ -61,6 +63,7 @@ public class ServerGUI extends JFrame implements Observer {
         addFlightButton.addActionListener(e -> {addFlight(); populateFlights();});
         removeFlightButton.addActionListener(e -> {removeFlight(); populateFlights();});
         addPromotionButton.addActionListener(e -> {addPromo(); populatePromos();});
+        removePromotionButton.addActionListener(e -> {removePromo(); populatePromos();});
 
 
 
@@ -74,6 +77,10 @@ public class ServerGUI extends JFrame implements Observer {
 
     private void addPromo() {
         new AddPromoPage();
+    }
+
+    private void removePromo(){
+        new RemovePromoPage();
     }
 
     private void populateFlights(){

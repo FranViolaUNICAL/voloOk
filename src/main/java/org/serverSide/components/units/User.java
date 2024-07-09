@@ -34,11 +34,11 @@ public class User implements Unit{
         this.dataDiNascita = dataDiNascita;
         int IDLENGTH = 7;
         userId = RandomStringGenerator.generateRandomString(IDLENGTH);
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         this.lastPurchaseDate = sdf.format(new Date());
     }
 
-    public User(String name, String surname, String email, String password, String luogoDiNascita, String regioneDiNascita, String dataDiNascita, String userId, String lastPurchaseDate){
+    public User(String name, String surname, String email, String password, String luogoDiNascita, String regioneDiNascita, String dataDiNascita, String userId, String lastPurchaseDate, int fidelityPoints){
         this.name = name;
         this.surname = surname;
         this.email = email;
@@ -48,6 +48,7 @@ public class User implements Unit{
         this.dataDiNascita = dataDiNascita;
         this.userId = userId;
         this.lastPurchaseDate = lastPurchaseDate;
+        this.fidelityPoints = fidelityPoints;
     }
     public String getName() {
         return name;

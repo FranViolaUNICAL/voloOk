@@ -9,25 +9,28 @@ public class BuyTicketForm extends JFrame{
     private JTextField promoCode;
     private JTextField creditCardNumber;
     private JButton purchaseFlightTicketButton;
-    private JPanel contentPane;
     private JTextField email;
     private JTextField surnameField;
     private JTextField nameField;
+
     private JLabel errorLabel;
     private JButton applyDiscountButton;
     private JLabel priceLabel;
+    private JRadioButton useFidelityPoints;
+    private JPanel contentPane;
+
     private Client c;
 
     public BuyTicketForm(Client c){
+        setContentPane(contentPane);
         this.c = c;
         setTitle("VoloOk Client");
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setContentPane(contentPane);
         pack();
 
         purchaseFlightTicketButton.addActionListener( e -> purchaseTicket());
         applyDiscountButton.addActionListener( e -> applyDiscount());
-
+        useFidelityPoints.addActionListener(e -> priceLabel.setEnabled(!priceLabel.isEnabled()));
         setVisible(true);
     }
 
@@ -36,9 +39,15 @@ public class BuyTicketForm extends JFrame{
             int price = c.fetchFlightPrice(flightID.getText());
             if(price > 0){
                 priceLabel.setText(String.valueOf(price));
-                purchaseFlightTicketButton.setText("Purchase Flight");
+                purchaseFlightTicketButton.setText("Purchase Ticket");
+                System.out.println(c.getFidelityPoints());
+                System.out.println(price*100);
+                if(price*100 <= c.getFidelityPoints()){
+                    useFidelityPoints.setEnabled(true);
+                }
                 errorLabel.setVisible(false);
             }else{
+                errorLabel.setText("Could not find flight.");
                 errorLabel.setVisible(true);
             }
         }else{
@@ -51,10 +60,21 @@ public class BuyTicketForm extends JFrame{
             }
             String flightID = this.flightID.getText();
             String email = this.email.getText();
-            if(c.purchaseTicket(flightID,name,surname,email,cardNumber,promoCode).getSuccess()){
-                setVisible(false);
-            }else{
+            if(name.isEmpty() || surname.isEmpty() || cardNumber.isEmpty() || flightID.isEmpty() || email.isEmpty()){
+                errorLabel.setText("Something is empty. Please check all fields and try again.");
                 errorLabel.setVisible(true);
+            }
+            else{
+                if(c.purchaseTicket(flightID,name,surname,email,cardNumber).getSuccess()){
+                    if(useFidelityPoints.isSelected()){
+                        int points = (int) Math.round(Double.parseDouble(priceLabel.getText()));
+                        c.deductFidelityPoints(points * 100);
+                    }
+                    setVisible(false);
+                }else{
+                    errorLabel.setText("Something went wrong during checkout. Please try again later.");
+                    errorLabel.setVisible(true);
+                }
             }
         }
     }
@@ -63,6 +83,10 @@ public class BuyTicketForm extends JFrame{
         int price = c.fetchFlightPrice(flightID.getText());
         double discountFactor = c.fetchDiscountFactor(promoCode.getText(),flightID.getText());
         priceLabel.setText(String.valueOf(price * discountFactor));
+        if(price*100 <= c.getFidelityPoints()){
+            useFidelityPoints.setEnabled(true);
+        }
+        purchaseFlightTicketButton.setText("Purchase Ticket");
     }
 
 }

@@ -1,9 +1,6 @@
 package org.serverSide.components.factories;
 
-import org.serverSide.components.singletonLists.BookingList;
-import org.serverSide.components.singletonLists.FlightList;
-import org.serverSide.components.singletonLists.PromoList;
-import org.serverSide.components.singletonLists.TicketList;
+import org.serverSide.components.singletonLists.*;
 import org.serverSide.components.units.*;
 import org.serverSide.grpc.PromoManager;
 import user.UserServices;
@@ -44,6 +41,7 @@ public class UserServicesFactory {
                 .setName(user.getName())
                 .setSurname(user.getSurname())
                 .setLastPurchaseDate(user.getLastPurchaseDate())
+                .setFidelityPoints(user.getFidelityPoints())
                 .build();
     }
     public static UserServices.PurchaseTicketResponse createPurchaseTicketResponse(String message, boolean success) {
@@ -210,10 +208,10 @@ public class UserServicesFactory {
                 .build();
     }
 
-    public static UserServices.PromoCheckResponse createPromoCheckResponse(String promoCode, String country, String flightId){
+    public static UserServices.PromoCheckResponse createPromoCheckResponse(String promoCode, String country, String flightId, boolean isFidelity){
         boolean success = false;
         String aita = null;
-        double discountFactor = 0;
+        double discountFactor = 1;
         List<Unit> flightList = FlightList.getInstance().getFlightList();
         for(Unit uF: flightList){
             Flight f = (Flight) uF;
@@ -226,7 +224,7 @@ public class UserServicesFactory {
             Promo p = (Promo) uP;
             if(p.getCode().equals(promoCode) && !(aita == null) && (p.getDestination().equals(country))){
                 try {
-                     success = PromoManager.isAirportInCountry(aita, country);
+                     success = PromoManager.isAirportInCountry(aita, country) && (p.getFidelityOnly() == isFidelity || !p.getFidelityOnly());
                      discountFactor = p.getDiscountFactor();
                 }catch (IOException e){
                     e.printStackTrace();
@@ -242,7 +240,7 @@ public class UserServicesFactory {
 
 
     public static UserServices.SearchFlightResponse createSearchFlightResponse(String flightId) {
-        String destination = null;
+        String destination = "";
         int price = -1;
         List<Unit> flightList = FlightList.getInstance().getFlightList();
         for(Unit uF : flightList){
@@ -257,9 +255,28 @@ public class UserServicesFactory {
             }
         }
         return UserServices.SearchFlightResponse.newBuilder()
-                .setSuccess(!(destination == null))
+                .setSuccess(!(destination.isBlank()))
                 .setDestinationCountry(destination)
                 .setPrice(price)
                 .build();
+    }
+
+    public static UserServices.DeductFidelityPointsResponse createDeductFidelityPointsResponse(String email, int pointsToDeduct){
+        boolean success = false;
+        try {
+            List<Unit> userList = UserList.getInstance().getUserList();
+            for(Unit uU : userList){
+                User u = (User) uU;
+                if(u.getEmail().equals(email)){
+                    UserList.getInstance().addFidelityPoints(u,-pointsToDeduct);
+                    success = true;
+                }
+            }
+            return UserServices.DeductFidelityPointsResponse.newBuilder().setSuccess(true).build();
+        }catch (IOException e){
+            return UserServices.DeductFidelityPointsResponse.newBuilder()
+                    .setSuccess(false)
+                    .build();
+        }
     }
 }

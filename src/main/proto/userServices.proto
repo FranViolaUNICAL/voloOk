@@ -16,7 +16,17 @@ service UserService {
   rpc FetchAllBookings(FetchAllBookingsRequest) returns (FetchAllBookingsResponse);
   rpc PromoCheck(PromoCheckRequest) returns (PromoCheckResponse);
   rpc SearchFlight(SearchFlightRequest) returns (SearchFlightResponse);
+  rpc deductFidelityPoints(DeductFidelityPointsRequest) returns (DeductFidelityPointsResponse);
 }
+message DeductFidelityPointsRequest{
+  int32 pointsToDeduct = 1;
+  string email = 2;
+}
+
+message DeductFidelityPointsResponse{
+  bool success = 1;
+}
+
 message SearchFlightRequest{
   string flightId = 1;
 }
@@ -31,6 +41,7 @@ message PromoCheckRequest{
   string promoCode = 1;
   string countryCode = 2;
   string flightId = 3;
+  bool isFidelity = 4;
 }
 
 message PromoCheckResponse{
@@ -127,6 +138,7 @@ message User {
   string surname = 7;
   string userId = 8;
   string lastPurchaseDate = 9;
+  int32 fidelityPoints = 10;
 }
 
 message LoginUserRequest {

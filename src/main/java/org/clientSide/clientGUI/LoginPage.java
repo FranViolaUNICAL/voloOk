@@ -8,6 +8,8 @@ public class LoginPage extends JFrame {
 
     private Client c;
     private ClientGUI cGUI;
+
+
     private JTextField usernameField;
     private JButton loginButton;
     private JPasswordField passwordField;
@@ -18,9 +20,9 @@ public class LoginPage extends JFrame {
 
 
     public LoginPage(Client c, ClientGUI cGUI){
+        setContentPane(content);
         setTitle("VoloOk Client");
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setContentPane(content);
         pack();
         this.c = c;
         this.cGUI = cGUI;
@@ -37,19 +39,22 @@ public class LoginPage extends JFrame {
         for(int i = 0; i < password.length; i++){
             pS.append(password[i]);
         }
-        if(c.login(email,pS.toString()) != null){
+        if(c.login(email,pS.toString())){
             setVisible(false);
+            cGUI.loginButton.setText("Logout");
+            cGUI.registerButton.setVisible(false);
+            cGUI.myBookingsButton.setEnabled(true);
+            cGUI.myTicketsButton.setEnabled(true);
+            cGUI.changeBookingDateButton.setEnabled(true);
+            cGUI.cancelBookingButton.setEnabled(true);
+            cGUI.myFidelityPointsButton.setEnabled(true);
+            c.sendNotifications(true);
         }else{
             wrongCredentialsLabel.setVisible(true);
             usernameField.setText("");
             passwordField.setText("");
         }
-        cGUI.loginButton.setText("Logout");
-        cGUI.registerButton.setVisible(false);
-        cGUI.myBookingsButton.setEnabled(true);
-        cGUI.myTicketsButton.setEnabled(true);
-        cGUI.changeBookingDateButton.setEnabled(true);
-        c.sendNotifications(true);
+
     }
 
 }

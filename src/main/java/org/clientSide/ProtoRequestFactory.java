@@ -105,5 +105,12 @@ public class ProtoRequestFactory {
                 .build();
     }
 
+    public static UserServices.DeductFidelityPointsRequest deductFidelityPoints(int pointsToDeduct, String email){
+        return UserServices.DeductFidelityPointsRequest.newBuilder()
+                .setEmail(email)
+                .setPointsToDeduct(pointsToDeduct)
+                .build();
+    }
+
 
 }

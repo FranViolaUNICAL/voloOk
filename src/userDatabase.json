@@ -1,16 +1,5 @@
 {
   "userList" : [ {
-    "name" : "francesco",
-    "surname" : "viola",
-    "email" : "franviola98@gmail.com",
-    "password" : "palmi24",
-    "fidelityPoints" : 0,
-    "luogoDiNascita" : "Palmi",
-    "regioneDiNascita" : "Calabria",
-    "dataDiNascita" : "13/08/2003",
-    "userId" : "NMW6S2J",
-    "lastPurchaseDate" : "08/07/2024 12:38:10"
-  }, {
     "name" : "Chiara",
     "surname" : "De Santis",
     "email" : "chiaradesantis@gmail.com",
@@ -20,7 +9,7 @@
     "regioneDiNascita" : "Calabria",
     "dataDiNascita" : "19/08/2003",
     "userId" : "CJKWYW5",
-    "lastPurchaseDate" : "07/06/24 19:14:36"
+    "lastPurchaseDate" : "07/06/2024 19:14:36"
   }, {
     "name" : "Francesco",
     "surname" : "Viola",
@@ -31,7 +20,7 @@
     "regioneDiNascita" : "Calabria",
     "dataDiNascita" : "13/08/2003",
     "userId" : "HRMCZ1I",
-    "lastPurchaseDate" : "12/06/24 22:34:02"
+    "lastPurchaseDate" : "12/06/2024 22:34:02"
   }, {
     "name" : "Franco",
     "surname" : "Casco",
@@ -42,6 +31,39 @@
     "regioneDiNascita" : "Calabria",
     "dataDiNascita" : "13/09/1993",
     "userId" : "0DN2IFA",
-    "lastPurchaseDate" : "12/06/24 22:41:05"
+    "lastPurchaseDate" : "12/06/2024 22:41:05"
+  }, {
+    "name" : "Gianni",
+    "surname" : "Morandi",
+    "email" : "giannimorandi@gmail.com",
+    "password" : "palmi24",
+    "fidelityPoints" : 400,
+    "luogoDiNascita" : "Sanremo",
+    "regioneDiNascita" : "Liguria",
+    "dataDiNascita" : "15/09/1955",
+    "userId" : "3OLS21G",
+    "lastPurchaseDate" : "09/07/2024 18:40:18"
+  }, {
+    "name" : "Giovanni",
+    "surname" : "Mazzei",
+    "email" : "giovannimazzei@unical.it",
+    "password" : "giogio",
+    "fidelityPoints" : 0,
+    "luogoDiNascita" : "Castel Silano",
+    "regioneDiNascita" : "Calabria",
+    "dataDiNascita" : "20/11/2003",
+    "userId" : "G19GXWB",
+    "lastPurchaseDate" : "09/07/2024 19:11:17"
+  }, {
+    "name" : "francesco",
+    "surname" : "viola",
+    "email" : "franviola98@gmail.com",
+    "password" : "palmi24",
+    "fidelityPoints" : 5171,
+    "luogoDiNascita" : "Palmi",
+    "regioneDiNascita" : "Calabria",
+    "dataDiNascita" : "13/08/2003",
+    "userId" : "NMW6S2J",
+    "lastPurchaseDate" : "10/07/2024 00:28:19"
   } ]
 }

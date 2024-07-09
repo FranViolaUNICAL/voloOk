@@ -6,5 +6,12 @@
     "surname" : "De Santis",
     "email" : "chiaradesantis@gmail.com",
     "bookedTicketsNum" : 2
+  }, {
+    "bookingId" : "60QGZ6UN",
+    "flightId" : "SUFLIN1507",
+    "name" : "Francesco",
+    "surname" : "Viola",
+    "email" : "franviola98@gmail.com",
+    "bookedTicketsNum" : 2
   } ]
 }

@@ -85,7 +85,6 @@ public class JsonManagerObs extends SubjectAbstract implements Observer{
             if(f.getFlightId().equals(flightId) && f.getAvailableSeats() >= 1 && checkLuhn(cardNumber)){
                 for(Unit uB : lB){
                     Booking b = (Booking) uB;
-
                     if(b.getEmail().equals(email) && b.getFlightId().equals(flightId)){
                         if(b.getBookedTicketsNum() > 1){
                             b.deductBookedTicketsNum();
@@ -158,16 +157,20 @@ public class JsonManagerObs extends SubjectAbstract implements Observer{
             Booking b = (Booking) uB;
             if(b.getBookingId().equals(bookingId)){
                 List<Unit> lFlights = FlightList.getInstance().getFlightList();
+                System.out.println(lFlights);
                 for(Unit uF : lFlights){
                     Flight f = (Flight) uF;
+                    System.out.println(f.getFlightId());
                     if(f.getFlightId().equals(b.getFlightId())) {
+                        System.out.println("correct");
                         return FlightList.getInstance().checkAvailabilityFromDate(f.getOrigin(), f.getDestination(), newDateDeparture);
-                    }else{
-                        return new ArrayList<Flight>();
                     }
                 }
+                System.out.println("no FlightID found");
+                return new ArrayList<Flight>();
             }
         }
+        System.out.println("no BookingID found");
         return new ArrayList<Flight>();
     }
 

@@ -95,6 +95,7 @@ public class UserServicesImpl extends UserServiceGrpc.UserServiceImplBase {
                     JsonManagerObs.checkForFidelity(request.getUserEmail(), request.getFlightId());
                 }
                 UserServices.PurchaseTicketResponse response = UserServicesFactory.createPurchaseTicketResponse(message, success);
+                FlightList.getInstance().notifyObservers();
                 responseObserver.onNext(response);
                 responseObserver.onCompleted();
             } catch (IOException e) {
@@ -202,7 +203,7 @@ public class UserServicesImpl extends UserServiceGrpc.UserServiceImplBase {
 
     public void promoCheck(UserServices.PromoCheckRequest request, StreamObserver<UserServices.PromoCheckResponse> responseObserver){
         ThreadPoolManager.getExecutorService().execute(() -> {
-            UserServices.PromoCheckResponse response = UserServicesFactory.createPromoCheckResponse(request.getPromoCode(), request.getCountryCode(), request.getFlightId());
+            UserServices.PromoCheckResponse response = UserServicesFactory.createPromoCheckResponse(request.getPromoCode(), request.getCountryCode(), request.getFlightId(), request.getIsFidelity());
             responseObserver.onNext(response);
             responseObserver.onCompleted();
         });
@@ -211,6 +212,14 @@ public class UserServicesImpl extends UserServiceGrpc.UserServiceImplBase {
     public void searchFlight(UserServices.SearchFlightRequest request, StreamObserver<UserServices.SearchFlightResponse> responseObserver){
         ThreadPoolManager.getExecutorService().execute(() -> {
             UserServices.SearchFlightResponse response = UserServicesFactory.createSearchFlightResponse(request.getFlightId());
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+        });
+    }
+
+    public void deductFidelityPoints(UserServices.DeductFidelityPointsRequest request, StreamObserver<UserServices.DeductFidelityPointsResponse> responseObserver){
+        ThreadPoolManager.getExecutorService().execute(() ->{
+            UserServices.DeductFidelityPointsResponse response = UserServicesFactory.createDeductFidelityPointsResponse(request.getEmail(), request.getPointsToDeduct());
             responseObserver.onNext(response);
             responseObserver.onCompleted();
         });
