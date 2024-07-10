@@ -18,12 +18,6 @@
     "passengerSurname" : "Viola",
     "passengerEmail" : "franviola98@gmail.com"
   }, {
-    "ticketId" : "5DIBCFU2RH",
-    "flightId" : "SUFLIN1507",
-    "passengerName" : "",
-    "passengerSurname" : "",
-    "passengerEmail" : ""
-  }, {
     "ticketId" : "E8QHS8FXI4",
     "flightId" : "SUFLIN1507",
     "passengerName" : "Francesco",

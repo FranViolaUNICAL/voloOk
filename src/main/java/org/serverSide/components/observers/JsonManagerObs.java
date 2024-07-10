@@ -5,7 +5,6 @@ import org.serverSide.components.singletonLists.*;
 import org.serverSide.components.singletons.ObjectMapperSingleton;
 import org.serverSide.components.units.*;
 
-import java.awt.print.Book;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
@@ -82,12 +81,12 @@ public class JsonManagerObs extends SubjectAbstract implements Observer{
         List<Unit> lB = BookingList.getInstance().getBookingList();
         for(Unit uf : l){
             Flight f = (Flight) uf;
-            if(f.getFlightId().equals(flightId) && f.getAvailableSeats() >= 1 && checkLuhn(cardNumber)){
+            if(f.getFlightId().equals(flightId) && f.getAvailableSeats() >= 1 && checkLuhn(cardNumber) && !email.isBlank() && checkEmail(email)){
                 for(Unit uB : lB){
                     Booking b = (Booking) uB;
                     if(b.getEmail().equals(email) && b.getFlightId().equals(flightId)){
                         if(b.getBookedTicketsNum() > 1){
-                            b.deductBookedTicketsNum();
+                            BookingList.getInstance().deductBookingNumber(b);
                         }
                         else{
                             BookingList.getInstance().remove(uB);
@@ -100,7 +99,40 @@ public class JsonManagerObs extends SubjectAbstract implements Observer{
         return false;
     }
 
-    public static void checkForFidelity(String userEmail, String flightId) throws IOException{
+    private static boolean checkEmail(String email) {
+        char[] array = email.toCharArray();
+        boolean foundAt = false;
+        boolean foundDotCom = false;
+        boolean valid = false;
+        int indexPoint = 0;
+        for (int i = 0; i < array.length; i++) {
+            if(array[i] == '@' && foundAt){
+                System.out.println("Found another @. Email becomes invalid");
+                foundAt = false;
+            }
+            if (array[i] == '@') {
+                System.out.println("found @");
+                foundAt = true;
+            }
+            if(array[i] == '.' && foundAt){
+                System.out.println("Found a dot after the @. Checking for correct domain");
+                foundDotCom = true;
+                indexPoint = i;
+            }
+        }
+        StringBuilder foundAfterPoint = new StringBuilder();
+        for (int i = indexPoint; i < array.length; i++) {
+            foundAfterPoint.append(array[i]);
+        }
+        String domain = foundAfterPoint.toString();
+        if(domain.equals(".com") || domain.equals(".net") || domain.equals(".org") || domain.equals(".it")){
+            valid = true;
+        }
+        System.out.println("valid: " + valid);
+        return valid;
+    }
+
+    public static boolean checkForFidelity(String userEmail, String flightId) throws IOException{
         List<Unit> l = UserList.getInstance().getUserList();
         int points = 0;
         for(Unit u : l){
@@ -116,8 +148,10 @@ public class JsonManagerObs extends SubjectAbstract implements Observer{
                 UserList.getInstance().addFidelityPoints(user, points);
                 user.setLastPurchaseDate(new SimpleDateFormat("dd/MM/yyyy' 'HH:mm:ss").format(new Date()));
                 UserList.getInstance().notifyObservers();
+                return true;
             }
         }
+        return false;
     }
 
     public static boolean checkForBooking(String flightId, int numSeats, String email) throws IOException, ParseException {

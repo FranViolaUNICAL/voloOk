@@ -18,7 +18,7 @@ public class PromoManager {
         mapper = ObjectMapperSingleton.getInstance().getObjectMapper();
     }
 
-    private static List<String> allAirportsInNation(String countryCode) throws IOException {
+    public static List<String> allAirportsInNation(String countryCode) throws IOException {
         JsonNode root = mapper.readTree(AIRPORTS_JSON);
         List<String> ret = new ArrayList<>();
         for(JsonNode airport : root){

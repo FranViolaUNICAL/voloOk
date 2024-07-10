@@ -23,5 +23,14 @@
     "flightId" : "SUFLIN1507",
     "price" : 129,
     "availableSeats" : 137
-  } ]
+  },
+    {
+      "departureTime" : "15/06/2024 13:00:00",
+      "arrivalTime" : "15/06/2024 15:00:00",
+      "origin" : "SUF",
+      "destination" : "LIN",
+      "flightId" : "SUFLIN1506",
+      "price" : 129,
+      "availableSeats" : 137
+    } ]
 }

@@ -59,7 +59,6 @@ public class FlightList extends SingletonListAbstract {
                 l.add(flight);
             }
         }
-        System.out.println(l);
         return l;
     }
 
@@ -72,7 +71,6 @@ public class FlightList extends SingletonListAbstract {
                 ret.add(flight);
             }
         }
-        System.out.println(ret + "In checkAvailabilityFromDate");
         return ret;
     }
 
